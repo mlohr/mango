@@ -1,36 +1,37 @@
 package net.mloehr.mango;
-import java.util.ArrayList;
-import java.util.List;
 
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RequiredArgsConstructor
 public class Action {
 
     @NonNull
-    private String     name;
+    private String name;
 
     @Getter
     private List<Task> tasks = new ArrayList<Task>();
 
     public Action type(String xpath, String text) {
         tasks.add(Task.builder()
-            .id(getTaskName())
-            .action(name)
-            .xpath(xpath)
-            .text(text)
-            .build());
+                .id(getTaskName())
+                .action(name)
+                .xpath(xpath)
+                .text(text)
+                .build());
         return this;
     }
 
     public Action click(String xpath) {
         tasks.add(Task.builder()
-            .id(getTaskName())
-            .action(name)
-            .xpath(xpath)
-            .build());
+                .id(getTaskName())
+                .action(name)
+                .xpath(xpath)
+                .build());
         return this;
     }
 
@@ -41,4 +42,5 @@ public class Action {
     private String getTaskName() {
         return new Exception().getStackTrace()[1].getMethodName();
     }
+
 }

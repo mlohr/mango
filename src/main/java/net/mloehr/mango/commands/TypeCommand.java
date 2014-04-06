@@ -8,6 +8,7 @@ public class TypeCommand implements Command {
     @Override
     public void execute(DriveSupport driver, Task task) {
         driver.forThis(task.getXpath())
-            .sendKeys(task.getText());
+                .sendKeys(task.getText());
     }
+
 }
