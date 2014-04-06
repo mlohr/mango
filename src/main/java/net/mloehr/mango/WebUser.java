@@ -15,7 +15,7 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 
 @Slf4j
 public class WebUser implements DriveSupport {
-    private static final String APPDATA = System.getenv("APPDATA");
+    //private static final String APPDATA = System.getenv("APPDATA");
 
     @Delegate
     private WebTasks            tasks   = new WebTasks(this);
@@ -23,19 +23,20 @@ public class WebUser implements DriveSupport {
     private Timer               timer;
 
     public WebUser(String url) {
-        val profilesDir = APPDATA + "\\Mozilla\\Firefox\\Profiles";
+        //val profilesDir = APPDATA + "\\Mozilla\\Firefox\\Profiles";
 
         FirefoxProfile profile = new FirefoxProfile();
-        String[] directories = new File(profilesDir).list();
-        for (val item : directories) {
-            if (item.endsWith("default")) {
-                profile = new FirefoxProfile(new File(profilesDir + "\\" + item));
-            }
-        }
+        //String[] directories = new File(profilesDir).list();
+        //if (directories != null)
+        //    for (val item : directories) {
+        //        if (item.endsWith("default")) {
+        //            profile = new FirefoxProfile(new File(profilesDir + "\\" + item));
+        //        }
+        //    }
+        //}
         profile.setAcceptUntrustedCertificates(true);
         driver = new FirefoxDriver(profile);
-        driver.manage()
-            .deleteAllCookies();
+        driver.manage().deleteAllCookies();
         driver.get(url);
         timer = new Timer(Timer.TIMEOUT_IN_SECONDS);
     }
@@ -76,4 +77,5 @@ public class WebUser implements DriveSupport {
             return false;
         }
     }
+
 }
