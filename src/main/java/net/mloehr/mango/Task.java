@@ -1,4 +1,5 @@
 package net.mloehr.mango;
+
 import lombok.Data;
 import lombok.NonNull;
 import lombok.experimental.Builder;
