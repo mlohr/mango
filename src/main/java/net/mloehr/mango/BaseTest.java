@@ -1,9 +1,9 @@
 package net.mloehr.mango;
+
 import java.lang.reflect.Proxy;
 
 import org.junit.After;
 
-//@Slf4j
 public class BaseTest {
 
     protected WebUser webUser;
@@ -13,10 +13,10 @@ public class BaseTest {
         Object instance = null;
         try {
             String clazzName = clazz.getName()
-                .replaceFirst("\\$Actions", "");
+                    .replaceFirst("\\$Actions", "");
             instance = Class.forName(clazzName)
-                .getConstructor()
-                .newInstance();
+                    .getConstructor()
+                    .newInstance();
         } catch (Exception e) {
             throw new RuntimeException("Cannot find inner Actions interface for class "
                     + clazz.getName());
@@ -29,12 +29,13 @@ public class BaseTest {
         // }
 
         return (T) Proxy.newProxyInstance(this.getClass()
-            .getClassLoader(), new Class<?>[] { clazz }, new ActionHandler(webUser, instance));
+                .getClassLoader(), new Class<?>[]{clazz}, new ActionHandler(webUser, instance));
     }
 
     @After
     public void closeBrowser() {
-        webUser.quit();
+        if (webUser != null)
+            webUser.quit();
     }
 
 }
