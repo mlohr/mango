@@ -9,3 +9,6 @@ target/
 # IntelliJ
 .idea/
 *.iml
+
+# FF plugins
+*.xpi
