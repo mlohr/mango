@@ -3,7 +3,7 @@ package net.mloehr.mango.commands;
 import net.mloehr.mango.DriveSupport;
 import net.mloehr.mango.Task;
 import net.mloehr.mango.Timer;
-import lombok.val;
+
 import org.openqa.selenium.WebElement;
 
 public class ClickCommand implements Command {

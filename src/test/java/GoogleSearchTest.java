@@ -15,8 +15,8 @@ public class GoogleSearchTest extends BaseTest {
     
     @Test
     public void shouldSearchResults() throws Exception {
+    	val results = new Results();
         webUser = new WebUser(GOOGLE, "network.automatic-ntlm-auth.trusted-uris=google.com;");
-        val results = new Results();
         
         assertThat(webUser.getCurrentUrl(), is(GOOGLE));
         on(googleSearchPage()).search("hello");
