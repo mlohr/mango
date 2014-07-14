@@ -3,10 +3,12 @@ package net.mloehr.mango;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import lombok.Delegate;
+import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 
 import org.openqa.selenium.*;
@@ -20,47 +22,21 @@ public class WebUser implements DriveSupport {
     private Timer timer;
 
     public WebUser(String url) {
-	    driver = new FirefoxDriver(useFireBugAndAcceptUntrustedCertificates());
+    	this(url, "");
+    }
+    
+    public WebUser(String url, String options) {
+    	Properties preferences = new Properties();
+    	if (options != null && options != "") {
+    		for (val entry: options.split(";")) {
+    			val pair = entry.split("=");
+    			preferences.setProperty(pair[0], pair[1]);
+    		}
+    	}
+	    driver = new FirefoxDriver(useFireBugAndAcceptUntrustedCertificates(preferences));
         driver.manage().deleteAllCookies();
         driver.get(url);
         timer = new Timer(Timer.TIMEOUT_IN_SECONDS);
-    }
-
-	public String getVersion(File firebug) {
-		String version = "";
-		Pattern pattern = Pattern.compile("firebug-([\\d\\.]+)\\.xpi");
-    	Matcher matcher = pattern.matcher(firebug.getName()); 
-    	if (matcher.find()) {
-    		version = matcher.group(1);
-    	}
-		return version;
-	}
-
-	public File getFireBug() {
-		File firebug = null;
-		File resources = new File("./resources");
-    	String[] files = resources.list();
-    	for (String file : files) {
-    		if (file.startsWith("firebug")) {
-    			firebug = new File(resources+"/"+file);
-    			break;
-    		}
-		}
-		return firebug;
-	}
-
-    private FirefoxProfile useFireBugAndAcceptUntrustedCertificates() {
-    	FirefoxProfile profile = new FirefoxProfile();
-    	File firebug = getFireBug();
-    	if (firebug != null) {
-    		try {
-				profile.addExtension(firebug);
-			} catch (IOException e) {
-			}
-    		profile.setPreference("extensions.firebug.currentVersion", getVersion(firebug));
-    	}
-        profile.setAcceptUntrustedCertificates(true);
-        return profile;
     }
 
     public String getCurrentUrl() {
@@ -106,4 +82,43 @@ public class WebUser implements DriveSupport {
         }
     }
 
+    private FirefoxProfile useFireBugAndAcceptUntrustedCertificates(Properties preferences) {
+    	FirefoxProfile profile = new FirefoxProfile();
+    	File firebug = getFireBug();
+    	String version = "";
+    	try {
+    		profile.addExtension(firebug);
+    	} catch (IOException e) {
+    		version = getVersion(firebug);
+    	}
+    	preferences.setProperty("extensions.firebug.currentVersion", version);
+    	for (val pref: preferences.entrySet()) {
+    		profile.setPreference(pref.getKey().toString(), pref.getValue().toString());
+    	}
+    	profile.setAcceptUntrustedCertificates(true);
+    	return profile;
+    }
+
+	private String getVersion(File firebug) {
+		String version = "";
+		Pattern pattern = Pattern.compile("firebug-([\\d\\.]+)\\.xpi");
+    	Matcher matcher = pattern.matcher(firebug.getName()); 
+    	if (matcher.find()) {
+    		version = matcher.group(1);
+    	}
+		return version;
+	}
+
+	private File getFireBug() {
+		File firebug = null;
+		File resources = new File("./resources");
+    	String[] files = resources.list();
+    	for (String file : files) {
+    		if (file.startsWith("firebug")) {
+    			firebug = new File(resources+"/"+file);
+    			break;
+    		}
+		}
+		return firebug;
+	}
 }
