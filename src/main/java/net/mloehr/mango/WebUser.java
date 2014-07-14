@@ -115,8 +115,9 @@ public class WebUser implements DriveSupport {
 			try {
 				profile.addExtension(extension);
 				preferences.setProperty("extensions."+name+".currentVersion", version);					
+				logger.info("added extension {} {}", name, version);
 			} catch (IOException e) {
-				logger.warn("adding extension {0}, unexpected: {1}",name, e);
+				logger.warn("adding extension {}, unexpected: {}",name, e);
 			}    		
     	}
 		
@@ -132,20 +133,4 @@ public class WebUser implements DriveSupport {
 		return result;
 	}
 
-//	private File getFireBug() {
-//		File firebug = null;
-//		File resources = new File("./resources");
-//    	String[] files = resources.list();
-//    	if (files == null) {
-//    		logger.warn("no extension(s) found");
-//    		return null;
-//    	}
-//    	for (String file : files) {
-//    		if (file.startsWith("firebug")) {
-//    			firebug = new File(resources+"/"+file);
-//    			break;
-//    		}
-//		}
-//		return files;
-//	}
 }
