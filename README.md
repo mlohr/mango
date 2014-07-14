@@ -38,3 +38,7 @@ Where Results is just a simple POJO (using the Project Lombok @Data annotation):
         private List<String>  items = new ArrayList<String>();
     }
 
+Firebug support
+---------------
+
+If you put a firebug-{version}.xpi in your ./resources directory, it will be available in the running firefox profile.
