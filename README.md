@@ -31,4 +31,10 @@ And GoogleResultsPage code:
                 .saveText(RESULT_HEADLINES, results, new Mapper(results, "items", "(.*)"));
     }
 
+Where Results is just a simple POJO (using the Project Lombok @Data annotation):
+
+    @Data
+    public class Results {
+        private List<String>  items = new ArrayList<String>();
+    }
 
