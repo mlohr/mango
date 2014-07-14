@@ -1,7 +1,7 @@
 mango
 =====
 
-Java testing DSL for web driven testing using Selenium, utilising the page object pattern, loose coupling and code completion for supurb maintainability of your ui tests.
+Java testing DSL for web driven testing using Selenium, utilising the page object pattern, loose coupling and code completion for superb maintainability of your Web-UI tests.
 
 Google search example code:
 
