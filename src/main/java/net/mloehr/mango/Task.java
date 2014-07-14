@@ -18,6 +18,10 @@ public class Task {
 
     private String text;
 
+    private Object data;
+    
+    private Mapper mapper;
+    
     private Object result;
 
 }

@@ -2,6 +2,7 @@ package net.mloehr.mango;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,8 +16,6 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 @Slf4j
 public class WebUser implements DriveSupport {
 
-    @Delegate
-    private WebTasks tasks = new WebTasks(this);
     private WebDriver driver;
     private Timer timer;
 
@@ -78,6 +77,12 @@ public class WebUser implements DriveSupport {
         return driver.findElement(By.xpath(xpath));
     }
 
+    @Override
+    public List<WebElement> forThese(String xpath) {
+        waitForThis(xpath);
+        return driver.findElements(By.xpath(xpath));
+    }
+    
     private void waitForThis(String xpath) {
         timer.reset();
         while (timer.isNotExpired()) {

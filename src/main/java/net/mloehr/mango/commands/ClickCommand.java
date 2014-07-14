@@ -17,5 +17,4 @@ public class ClickCommand implements Command {
             Timer.waitFor(200);
         }
     }
-
 }

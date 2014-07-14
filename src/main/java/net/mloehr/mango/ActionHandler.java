@@ -4,6 +4,7 @@ import javassist.util.proxy.MethodHandler;
 import lombok.extern.slf4j.Slf4j;
 import net.mloehr.mango.commands.ClickCommand;
 import net.mloehr.mango.commands.Command;
+import net.mloehr.mango.commands.SaveTextCommand;
 import net.mloehr.mango.commands.TypeCommand;
 
 import java.lang.reflect.Method;
@@ -20,6 +21,7 @@ public class ActionHandler implements MethodHandler {
         availableCommands = new HashMap<>();
         availableCommands.put("type", new TypeCommand());
         availableCommands.put("click", new ClickCommand());
+        availableCommands.put("saveText", new SaveTextCommand());
     }
 
     @Override
