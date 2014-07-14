@@ -35,17 +35,21 @@ public class WebUser implements DriveSupport {
     
     public WebUser(String url, String options) {
     	Properties preferences = new Properties();
-    	if (options != null && options != "") {
+    	parseOptions(preferences, options);
+	    driver = new FirefoxDriver(useExtensionsAndAcceptUntrustedCertificates(preferences));
+        driver.manage().deleteAllCookies();
+        driver.get(url);
+        timer = new Timer(Timer.TIMEOUT_IN_SECONDS);
+    }
+
+	private void parseOptions(Properties preferences, String options) {
+		if (options != null && options != "") {
     		for (val entry: options.split(";")) {
     			val pair = entry.split("=");
     			preferences.setProperty(pair[0], pair[1]);
     		}
     	}
-	    driver = new FirefoxDriver(useFireBugAndAcceptUntrustedCertificates(preferences));
-        driver.manage().deleteAllCookies();
-        driver.get(url);
-        timer = new Timer(Timer.TIMEOUT_IN_SECONDS);
-    }
+	}
 
     public String getCurrentUrl() {
         return driver.getCurrentUrl();
@@ -90,9 +94,9 @@ public class WebUser implements DriveSupport {
         }
     }
 
-    private FirefoxProfile useFireBugAndAcceptUntrustedCertificates(Properties preferences) {
+    private FirefoxProfile useExtensionsAndAcceptUntrustedCertificates(Properties preferences) {
     	FirefoxProfile profile = new FirefoxProfile();
-    	addFireBugExtension(profile, preferences);
+    	addExtensions(profile, preferences);
     	for (val pref: preferences.entrySet()) {
     		profile.setPreference(pref.getKey().toString(), pref.getValue().toString());
     	}
@@ -100,44 +104,48 @@ public class WebUser implements DriveSupport {
     	return profile;
     }
 
-	private void addFireBugExtension(FirefoxProfile profile, Properties preferences) {
-		File firebug = getFireBug();
-    	String version = "";
-    	if (firebug != null) {
-    		try {
-    			profile.addExtension(firebug);
-    		} catch (IOException e) {
-    			logger.warn("adding firebug, unexpected: {0}",e);
-    		}    		
-    		version = getVersion(firebug);
-    		preferences.setProperty("extensions.firebug.currentVersion", version);
-    	}
-	}
-
-	private String getVersion(File firebug) {
-		String version = "";
-		Pattern pattern = Pattern.compile("firebug-([\\d\\.]+)\\.xpi");
-    	Matcher matcher = pattern.matcher(firebug.getName()); 
-    	if (matcher.find()) {
-    		version = matcher.group(1);
-    	}
-		return version;
-	}
-
-	private File getFireBug() {
-		File firebug = null;
+	private void addExtensions(FirefoxProfile profile, Properties preferences) {
 		File resources = new File("./resources");
     	String[] files = resources.list();
-    	if (files == null) {
-    		logger.warn("no firebug extension found!");
-    		return firebug;
-    	}
     	for (String file : files) {
-    		if (file.startsWith("firebug")) {
-    			firebug = new File(resources+"/"+file);
-    			break;
-    		}
-		}
-		return firebug;
+    		val extension = new File(resources+"/"+file);
+			String[] parsed = parseNameAndVersion(extension).split(";");
+			final String name = parsed[0];
+			final String version = parsed[1];
+			try {
+				profile.addExtension(extension);
+				preferences.setProperty("extensions."+name+".currentVersion", version);					
+			} catch (IOException e) {
+				logger.warn("adding extension {0}, unexpected: {1}",name, e);
+			}    		
+    	}
+		
 	}
+
+	private String parseNameAndVersion(File file) {
+		String result = "";
+		Pattern pattern = Pattern.compile("(\\w+)-([\\d\\.]+)-*\\w*\\.xpi");
+    	Matcher matcher = pattern.matcher(file.getName()); 
+    	if (matcher.find()) {
+    		result = matcher.group(1)+";"+matcher.group(2);
+    	}
+		return result;
+	}
+
+//	private File getFireBug() {
+//		File firebug = null;
+//		File resources = new File("./resources");
+//    	String[] files = resources.list();
+//    	if (files == null) {
+//    		logger.warn("no extension(s) found");
+//    		return null;
+//    	}
+//    	for (String file : files) {
+//    		if (file.startsWith("firebug")) {
+//    			firebug = new File(resources+"/"+file);
+//    			break;
+//    		}
+//		}
+//		return files;
+//	}
 }
