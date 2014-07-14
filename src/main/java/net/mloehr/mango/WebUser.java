@@ -107,9 +107,10 @@ public class WebUser implements DriveSupport {
     		try {
     			profile.addExtension(firebug);
     		} catch (IOException e) {
-    			version = getVersion(firebug);
-    			preferences.setProperty("extensions.firebug.currentVersion", version);
+    			logger.warn("adding firebug, unexpected: {0}",e);
     		}    		
+    		version = getVersion(firebug);
+    		preferences.setProperty("extensions.firebug.currentVersion", version);
     	}
 	}
 
