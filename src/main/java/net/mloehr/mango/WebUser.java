@@ -108,6 +108,9 @@ public class WebUser implements DriveSupport {
 		File resources = new File("./resources");
     	String[] files = resources.list();
     	for (String file : files) {
+    		if (! file.endsWith(".xpi")) {
+    			continue;
+    		}
     		val extension = new File(resources+"/"+file);
 			String[] parsed = parseNameAndVersion(extension).split(";");
 			final String name = parsed[0];

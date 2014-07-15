@@ -1,4 +1,4 @@
-package net.mloehr.mango.ext;
+package net.mloehr.mango;
 
 import java.util.regex.Pattern;
 
@@ -11,7 +11,7 @@ import org.hamcrest.TypeSafeMatcher;
  *
  * @author t.wood
  */
-public class RegexMatcher
+public class Matchers
 {
    private static abstract class AbstractRegexpMatcher extends TypeSafeMatcher<String>
    {

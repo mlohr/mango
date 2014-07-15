@@ -1,4 +1,4 @@
-import static net.mloehr.mango.ext.RegexMatcher.containsMatch;
+import static net.mloehr.mango.Matchers.containsMatch;
 import static org.hamcrest.CoreMatchers.everyItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
