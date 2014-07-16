@@ -9,6 +9,7 @@ import net.mloehr.mango.Task;
 import net.mloehr.mango.Timer;
 
 import org.openqa.selenium.WebElement;
+import org.slf4j.LoggerFactory;
 
 public class SaveTextCommand implements Command {
 
@@ -36,7 +37,7 @@ public class SaveTextCommand implements Command {
 
 	private Timer waitForElement(List<WebElement> elements) {
 		String text;
-    	val timer = new Timer(2000);
+    	val timer = new Timer(10);
     	timer.reset(); 	
 		while (timer.isNotExpired()) {
     		text = elements.get(0).getText();
