@@ -1,6 +1,5 @@
 mango
 =====
-
 Java testing DSL for web driven testing using Selenium, utilising the page object pattern, loose coupling and code completion for superb maintainability of your Web-UI tests.
 
 Google search example code:
@@ -40,5 +39,8 @@ Where Results is just a simple POJO (using the Project Lombok @Data annotation):
 
 Firebug support & other extensions
 ---------------
-
 If you put a firebug-{version}.xpi in your ./resources directory, it will be available in the running firefox profile. Likewise you can put other extensions in there, for example firepath.
+
+Installation notes
+-----------------
+mango relies on project Lombok, you have to install this and integrate in your IDE, please see: http://projectlombok.org/features/index.html
