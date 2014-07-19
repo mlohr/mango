@@ -28,6 +28,15 @@ public class GoogleSearchTest extends BaseTest {
     }
 
     @Test
+    public void shouldGetText() throws Exception {
+    	val text = new StringBuilder();
+        webUser = new WebUser(GOOGLE+"?hl=de");
+        on(googleSearchPage()).search("hello");
+        on(googleResultsPage()).getBilderText(text);
+        assertThat(text.toString(), is("Bilder"));
+    }
+    
+    @Test
     public void shouldNotFindNonExistingElement() throws Exception {
         webUser = new WebUser(GOOGLE);
         try {

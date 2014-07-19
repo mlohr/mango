@@ -1,15 +1,16 @@
 package net.mloehr.mango;
 
+import java.lang.reflect.Method;
+import java.util.HashMap;
+
 import javassist.util.proxy.MethodHandler;
 import lombok.extern.slf4j.Slf4j;
 import net.mloehr.mango.commands.ClickCommand;
 import net.mloehr.mango.commands.Command;
 import net.mloehr.mango.commands.ExpectAttributeCommand;
-import net.mloehr.mango.commands.SaveTextCommand;
+import net.mloehr.mango.commands.GetTextCommand;
+import net.mloehr.mango.commands.MapTextCommand;
 import net.mloehr.mango.commands.TypeCommand;
-
-import java.lang.reflect.Method;
-import java.util.HashMap;
 
 @Slf4j
 public class ActionHandler implements MethodHandler {
@@ -23,7 +24,8 @@ public class ActionHandler implements MethodHandler {
         availableCommands.put("type", new TypeCommand());
         availableCommands.put("click", new ClickCommand());
         availableCommands.put("expectAttribute", new ExpectAttributeCommand());
-        availableCommands.put("saveText", new SaveTextCommand());
+        availableCommands.put("mapText", new MapTextCommand());
+        availableCommands.put("getText", new GetTextCommand());
     }
 
     @Override

@@ -56,15 +56,29 @@ public class Action {
     }
     
     /**
-     * saves the text into 'data', using the {@link Mapper}, of web-element identified by 'xpath'
+     * maps the text into 'data', using the {@link Mapper}, of web-element identified by 'xpath'
      */
-    public Action saveText(String xpath, Object data, Mapper mapper) {
+    public Action mapText(String xpath, Object data, Mapper mapper) {
         tasks.add(Task.builder()
                 .id(getTaskName())
                 .action(name)
                 .xpath(xpath)
                 .data(data)
                 .mapper(mapper)
+                .build());
+        return this;
+    }
+
+    
+    /**
+     * gets the text into 'data', of web-element identified by 'xpath'
+     */
+    public Action getText(String xpath, Object data) {
+        tasks.add(Task.builder()
+                .id(getTaskName())
+                .action(name)
+                .xpath(xpath)
+                .data(data)
                 .build());
         return this;
     }

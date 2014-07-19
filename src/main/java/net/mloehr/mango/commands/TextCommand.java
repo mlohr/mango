@@ -9,14 +9,12 @@ import net.mloehr.mango.Task;
 import net.mloehr.mango.Timer;
 
 import org.openqa.selenium.WebElement;
-import org.slf4j.LoggerFactory;
 
-public class SaveTextCommand implements Command {
+public class TextCommand {
 
     private static final String FIND_ALL = "{find-all}";
 
-	@Override
-    public void execute(DriveSupport driver, Task task) throws Exception {    	
+    public void executeText(DriveSupport driver, Task task) throws Exception {    	
     	String text = "";
     	String xpath = task.getXpath();
     	List<WebElement> elements = null;
@@ -29,10 +27,30 @@ public class SaveTextCommand implements Command {
     	if (timer.isExpired()) {
     		return;
     	}
-    	for(val element: elements) {
-    		text += element.getText()+"\n";
+    	if (task.getMapper() == null) {
+    		StringBuilder data = (StringBuilder) task.getData();
+        	if (elements.size() == 1) {
+        		data.append(elements.get(0).getText());
+        	} else {        		
+        		for(val element: elements) {
+        			data.append(element.getText()+"\n");
+        		}    		
+        	}
+    	} else {
+			for(val element: elements) {
+				text += element.getText()+"\n";
+			}
+			task.getMapper().map(text);    		    		    		
     	}
-    	task.getMapper().map(text);    		    		
+//    	if (elements.size() == 1) {
+//    		StringBuilder data = (StringBuilder) task.getData();
+//    		data.append(elements.get(0).getText());
+//    	} else {    		
+//    		for(val element: elements) {
+//    			text += element.getText()+"\n";
+//    		}
+//    		task.getMapper().map(text);    		    		
+//    	}
     }
 
 	private Timer waitForElement(List<WebElement> elements) {
