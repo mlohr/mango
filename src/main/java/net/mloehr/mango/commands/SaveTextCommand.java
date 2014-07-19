@@ -16,7 +16,7 @@ public class SaveTextCommand implements Command {
     private static final String FIND_ALL = "{find-all}";
 
 	@Override
-    public void execute(DriveSupport driver, Task task) {    	
+    public void execute(DriveSupport driver, Task task) throws Exception {    	
     	String text = "";
     	String xpath = task.getXpath();
     	List<WebElement> elements = null;
@@ -49,7 +49,7 @@ public class SaveTextCommand implements Command {
 		return timer;
 	}
 
-	private List<WebElement> getElements(DriveSupport driver, String xpath) {
+	private List<WebElement> getElements(DriveSupport driver, String xpath) throws Exception {
 		List<WebElement> elements;
 		if (xpath.startsWith(FIND_ALL)) {
     		elements = driver.forThese(xpath.replace(FIND_ALL, ""));

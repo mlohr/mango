@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 public class ClickCommand implements Command {
 
     @Override
-    public void execute(DriveSupport driver, Task task) {
+    public void execute(DriveSupport driver, Task task) throws Exception {
         WebElement element = driver.forThis(task.getXpath());
         String onClick = element.getAttribute("onclick");
         element.click();

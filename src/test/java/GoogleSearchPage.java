@@ -11,4 +11,9 @@ public class GoogleSearchPage {
                 .click(SEARCH_BUTTON);
     }
 
+    public Action clickOn(String xpath) {
+        return Action.withTasks()
+                .click(xpath);
+    }
+
 }

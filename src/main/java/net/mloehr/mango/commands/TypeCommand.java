@@ -6,7 +6,7 @@ import net.mloehr.mango.Task;
 public class TypeCommand implements Command {
 
     @Override
-    public void execute(DriveSupport driver, Task task) {
+    public void execute(DriveSupport driver, Task task) throws Exception {
         driver.forThis(task.getXpath())
                 .sendKeys(task.getText());
     }

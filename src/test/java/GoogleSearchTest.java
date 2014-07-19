@@ -1,11 +1,14 @@
 import static net.mloehr.mango.Matchers.containsMatch;
 import static org.hamcrest.CoreMatchers.everyItem;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 import lombok.val;
 import mango.Results;
 import net.mloehr.mango.BaseTest;
 import net.mloehr.mango.WebUser;
+import net.mloehr.mango.XPathNotFoundException;
 
 import org.junit.Test;
 
@@ -24,6 +27,17 @@ public class GoogleSearchTest extends BaseTest {
         assertThat(results.getItems(), everyItem(containsMatch("(?i)hello")));
     }
 
+    @Test
+    public void shouldNotFindNonExistingElement() throws Exception {
+        webUser = new WebUser(GOOGLE);
+        try {
+			on(googleSearchPage()).clickOn("./*[@id='thisIsNotExisting']");
+			fail("Missed Exception, should not happen!");
+		} catch (Exception e) {
+			assertThat(e, instanceOf(XPathNotFoundException.class));
+		}
+    }
+    
     public static Class<GoogleSearchPage> googleSearchPage() {
         return GoogleSearchPage.class;
     }

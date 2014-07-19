@@ -11,6 +11,7 @@ import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
@@ -60,9 +61,14 @@ public class WebUser implements DriveSupport {
     }
 
     @Override
-    public WebElement forThis(String xpath) {
+    public WebElement forThis(String xpath) throws Exception {
         waitForThis(xpath);
-        return driver.findElement(By.xpath(xpath));
+        if (currentPageHas(xpath)) {
+        	val element = driver.findElement(By.xpath(xpath));
+        	((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+			return element;
+        }
+        throw new XPathNotFoundException(xpath);
     }
 
     @Override

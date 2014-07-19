@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 
 public interface DriveSupport {
 
-    public abstract WebElement forThis(String xpath);
+    public abstract WebElement forThis(String xpath) throws Exception;
 
 	List<WebElement> forThese(String xpath);
 

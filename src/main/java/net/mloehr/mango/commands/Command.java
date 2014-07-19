@@ -5,6 +5,6 @@ import net.mloehr.mango.Task;
 
 public interface Command {
 
-    public void execute(DriveSupport driver, Task task);
+    public void execute(DriveSupport driver, Task task) throws Exception;
 
 }

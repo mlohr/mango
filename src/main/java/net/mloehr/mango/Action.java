@@ -16,6 +16,9 @@ public class Action {
     @Getter
     private List<Task> tasks = new ArrayList<Task>();
 
+    /**
+     * types 'text' into web-element identified by 'xpath'
+     */
     public Action type(String xpath, String text) {
         tasks.add(Task.builder()
                 .id(getTaskName())
@@ -26,6 +29,9 @@ public class Action {
         return this;
     }
 
+    /**
+     * clicks on web-element identified by 'xpath'
+     */
     public Action click(String xpath) {
         tasks.add(Task.builder()
                 .id(getTaskName())
@@ -35,6 +41,23 @@ public class Action {
         return this;
     }
 
+    /**
+     * test if the web-element identified by 'xpath', has the 'attribute' with 'value'
+     */
+    public Action expectAttribute(String xpath, String attribute, String value) {
+        tasks.add(Task.builder()
+                .id(getTaskName())
+                .action(name)
+                .xpath(xpath)
+                .text(attribute)
+                .data(value)
+                .build());
+        return this;
+    }
+    
+    /**
+     * saves the text into 'data', using the {@link Mapper}, of web-element identified by 'xpath'
+     */
     public Action saveText(String xpath, Object data, Mapper mapper) {
         tasks.add(Task.builder()
                 .id(getTaskName())

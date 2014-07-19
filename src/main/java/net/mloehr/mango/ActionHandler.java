@@ -4,6 +4,7 @@ import javassist.util.proxy.MethodHandler;
 import lombok.extern.slf4j.Slf4j;
 import net.mloehr.mango.commands.ClickCommand;
 import net.mloehr.mango.commands.Command;
+import net.mloehr.mango.commands.ExpectAttributeCommand;
 import net.mloehr.mango.commands.SaveTextCommand;
 import net.mloehr.mango.commands.TypeCommand;
 
@@ -21,6 +22,7 @@ public class ActionHandler implements MethodHandler {
         availableCommands = new HashMap<>();
         availableCommands.put("type", new TypeCommand());
         availableCommands.put("click", new ClickCommand());
+        availableCommands.put("expectAttribute", new ExpectAttributeCommand());
         availableCommands.put("saveText", new SaveTextCommand());
     }
 
@@ -33,7 +35,7 @@ public class ActionHandler implements MethodHandler {
         return action;
     }
 
-    private void execute(Task task) {
+    private void execute(Task task) throws Exception {
         Command command = availableCommands.get(task.getId());
         if (command != null) {
             log.info("{}.{} ({})", task.getAction(), task.getId(), task);
