@@ -15,7 +15,6 @@ public class TextCommand {
     private static final String FIND_ALL = "{find-all}";
 
     public void executeText(DriveSupport driver, Task task) throws Exception {    	
-    	String text = "";
     	String xpath = task.getXpath();
     	List<WebElement> elements = null;
  
@@ -28,30 +27,30 @@ public class TextCommand {
     		return;
     	}
     	if (task.getMapper() == null) {
-    		StringBuilder data = (StringBuilder) task.getData();
-        	if (elements.size() == 1) {
-        		data.append(elements.get(0).getText());
-        	} else {        		
-        		for(val element: elements) {
-        			data.append(element.getText()+"\n");
-        		}    		
-        	}
+    		appendElementsText(task, elements);
     	} else {
-			for(val element: elements) {
-				text += element.getText()+"\n";
-			}
-			task.getMapper().map(text);    		    		    		
+    		mapElementsText(task, elements);    		    		    		
     	}
-//    	if (elements.size() == 1) {
-//    		StringBuilder data = (StringBuilder) task.getData();
-//    		data.append(elements.get(0).getText());
-//    	} else {    		
-//    		for(val element: elements) {
-//    			text += element.getText()+"\n";
-//    		}
-//    		task.getMapper().map(text);    		    		
-//    	}
     }
+
+	private void appendElementsText(Task task, List<WebElement> elements) {
+		StringBuilder data = (StringBuilder) task.getData();
+		if (elements.size() == 1) {
+			data.append(elements.get(0).getText());
+		} else {        		
+			for(val element: elements) {
+				data.append(element.getText()+"\n");
+			}    		
+		}
+	}
+	
+	private void mapElementsText(Task task, List<WebElement> elements) {
+		String text = "";
+		for(val element: elements) {
+			text += element.getText()+"\n";
+		}
+		task.getMapper().map(text);
+	}
 
 	private Timer waitForElement(List<WebElement> elements) {
 		String text;
