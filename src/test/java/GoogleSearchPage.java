@@ -16,4 +16,8 @@ public class GoogleSearchPage {
                 .click(xpath);
     }
 
+    public Action testButtonDisplayed(Object displayed) {
+        return Action.withTasks()
+        		.testVisibility(SEARCH_BUTTON, displayed);
+    }
 }

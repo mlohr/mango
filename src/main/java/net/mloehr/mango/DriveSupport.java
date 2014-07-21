@@ -8,6 +8,6 @@ public interface DriveSupport {
 
     public abstract WebElement forThis(String xpath) throws Exception;
 
-	List<WebElement> forThese(String xpath);
+	List<WebElement> forThese(String xpath) throws Exception;
 
 }

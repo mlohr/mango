@@ -42,15 +42,14 @@ public class Action {
     }
 
     /**
-     * test if the web-element identified by 'xpath', has the 'attribute' with 'value'
-     */
-    public Action expectAttribute(String xpath, String attribute, String value) {
+     * test if the web-element identified by 'xpath', is visible
+     */          
+    public Action testVisibility(String xpath, Object visible) {
         tasks.add(Task.builder()
                 .id(getTaskName())
                 .action(name)
                 .xpath(xpath)
-                .text(attribute)
-                .data(value)
+                .data(visible)
                 .build());
         return this;
     }

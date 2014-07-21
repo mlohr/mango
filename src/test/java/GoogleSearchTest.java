@@ -19,10 +19,21 @@ public class GoogleSearchTest extends BaseTest {
     @Test
     public void shouldSearchResults() throws Exception {
     	val results = new Results();
+    	StringBuilder displayed;
+    	
         webUser = new WebUser(GOOGLE, "network.automatic-ntlm-auth.trusted-uris=google.com;");
-        
         assertThat(webUser.getCurrentUrl(), is(GOOGLE));
+        
+        displayed = new StringBuilder();
+        on(googleSearchPage()).testButtonDisplayed(displayed);
+        assertThat(displayed.toString(), is("false"));
+        
         on(googleSearchPage()).search("hello");
+        
+        displayed = new StringBuilder();
+        on(googleSearchPage()).testButtonDisplayed(displayed);
+        assertThat(displayed.toString(), is("true"));
+
         on(googleResultsPage()).getResults(results);
         assertThat(results.getItems(), everyItem(containsMatch("(?i)hello")));
     }

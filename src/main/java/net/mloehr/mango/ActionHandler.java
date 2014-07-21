@@ -7,10 +7,9 @@ import javassist.util.proxy.MethodHandler;
 import lombok.extern.slf4j.Slf4j;
 import net.mloehr.mango.commands.ClickCommand;
 import net.mloehr.mango.commands.Command;
-import net.mloehr.mango.commands.ExpectAttributeCommand;
-import net.mloehr.mango.commands.GetTextCommand;
-import net.mloehr.mango.commands.MapTextCommand;
+import net.mloehr.mango.commands.TextCommand;
 import net.mloehr.mango.commands.TypeCommand;
+import net.mloehr.mango.commands.VisibilityCommand;
 
 @Slf4j
 public class ActionHandler implements MethodHandler {
@@ -23,9 +22,9 @@ public class ActionHandler implements MethodHandler {
         availableCommands = new HashMap<>();
         availableCommands.put("type", new TypeCommand());
         availableCommands.put("click", new ClickCommand());
-        availableCommands.put("expectAttribute", new ExpectAttributeCommand());
-        availableCommands.put("mapText", new MapTextCommand());
-        availableCommands.put("getText", new GetTextCommand());
+        availableCommands.put("mapText", new TextCommand());
+        availableCommands.put("getText", new TextCommand());
+        availableCommands.put("testVisibility", new VisibilityCommand());
     }
 
     @Override

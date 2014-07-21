@@ -20,8 +20,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.slf4j.LoggerFactory;
 
-import ch.qos.logback.classic.Logger;
-
 @Slf4j
 public class WebUser implements DriveSupport {
 
@@ -72,9 +70,14 @@ public class WebUser implements DriveSupport {
     }
 
     @Override
-    public List<WebElement> forThese(String xpath) {
+    public List<WebElement> forThese(String xpath) throws Exception {
         waitForThis(xpath);
-        return driver.findElements(By.xpath(xpath));
+        if (currentPageHas(xpath)) {
+        	val elements = driver.findElements(By.xpath(xpath));
+        	((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", elements.get(0));
+			return elements;
+        }
+        throw new XPathNotFoundException(xpath);
     }
     
     private void waitForThis(String xpath) {
