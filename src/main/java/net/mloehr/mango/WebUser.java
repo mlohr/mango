@@ -116,6 +116,10 @@ public class WebUser implements DriveSupport {
 	private void addExtensions(FirefoxProfile profile, Properties preferences) {
 		File resources = new File("./resources");
     	String[] files = resources.list();
+    	if (files == null) {
+    		logger.info("no extensions found");
+    		return;
+    	}
     	for (String file : files) {
     		if (! file.endsWith(".xpi")) {
     			continue;
