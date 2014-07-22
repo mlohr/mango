@@ -11,6 +11,7 @@ import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.UnhandledAlertException;
@@ -39,6 +40,13 @@ public class WebUser implements DriveSupport {
         driver.manage().deleteAllCookies();
         driver.get(url);
         timer = new Timer(Timer.TIMEOUT_IN_SECONDS);
+        
+        JavascriptExecutor js = (JavascriptExecutor)driver;
+        Long height = (Long)js.executeScript("return screen.height");
+    	Dimension size = driver.manage().window().getSize();
+		val dim = new Dimension(size.width, height.intValue());
+		driver.manage().window().setSize(dim);
+
     }
 
 	private void parseOptions(Properties preferences, String options) {
@@ -63,8 +71,23 @@ public class WebUser implements DriveSupport {
         waitForThis(xpath);
         if (currentPageHas(xpath)) {
         	val element = driver.findElement(By.xpath(xpath));
-        	((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
-			return element;
+        	
+        	        
+//        	Dimension size = driver.manage().window().getSize();
+//        	logger.debug("x: {}, y: {}, width: {}, height: {}; window w:{}, h:{}", 
+//        			element.getLocation().x, element.getLocation().y, element.getSize().width, element.getSize().height, size.width, size.height);
+        	
+        	String script = "arguments[0].scrollIntoView(false);";
+			((JavascriptExecutor) driver).executeScript(script, element);
+        	
+//			val maxY = element.getLocation().y +  element.getSize().height;
+//			if(maxY > size.height) {
+//				val dim = new Dimension(size.width, maxY);
+//				driver.manage().window().setSize(dim);
+//				Timer.waitFor(2000);
+//			}
+			
+        	return element;
         }
         throw new XPathNotFoundException(xpath);
     }

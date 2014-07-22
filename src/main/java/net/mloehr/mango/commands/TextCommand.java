@@ -7,14 +7,31 @@ import net.mloehr.mango.DriveSupport;
 import net.mloehr.mango.Task;
 import net.mloehr.mango.Timer;
 
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
+import org.slf4j.LoggerFactory;
 
 public class TextCommand implements Command {
 
+	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(TextCommand.class);
+
     @Override
     public void execute(DriveSupport driver, Task task) throws Exception {
-        List<WebElement> elements = driver.forThese(task.getXpath());
-        waitForElement(elements);
+        List<WebElement> elements = null;
+        
+		boolean notReady= true;
+		do {
+			try {
+				elements = driver.forThese(task.getXpath());
+				waitForElement(elements);
+				notReady = false;
+			} catch (StaleElementReferenceException e) {
+				logger.warn("Stale element...");
+				Timer.waitFor(Timer.MILLISECONDS_BETWEEN_ELEMENT_CHECK);
+			}    		
+		} while (notReady);
+
+        
 		if (task.getMapper() == null) {
 			appendElementsText(task, elements);
 		} else {
