@@ -41,6 +41,20 @@ public class Action {
         return this;
     }
 
+
+    /**
+     * selects 'item' on drop-down web-element identified by 'xpath'
+     */
+    public Action select(String xpath, String item) {
+        tasks.add(Task.builder()
+                .id(getTaskName())
+                .action(name)
+                .xpath(xpath)
+                .text(item)
+                .build());
+        return this;
+    }
+
     /**
      * test if the web-element identified by 'xpath', is visible
      */          
