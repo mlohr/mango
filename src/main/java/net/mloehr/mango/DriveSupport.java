@@ -10,4 +10,6 @@ public interface DriveSupport {
 
 	List<WebElement> forThese(String xpath) throws Exception;
 
+	public abstract void execute(String script, String xpath) throws Exception;
+
 }

@@ -7,6 +7,7 @@ import javassist.util.proxy.MethodHandler;
 import lombok.extern.slf4j.Slf4j;
 import net.mloehr.mango.commands.ClickCommand;
 import net.mloehr.mango.commands.Command;
+import net.mloehr.mango.commands.ExecuteCommand;
 import net.mloehr.mango.commands.SelectCommand;
 import net.mloehr.mango.commands.TextCommand;
 import net.mloehr.mango.commands.TypeCommand;
@@ -27,6 +28,8 @@ public class ActionHandler implements MethodHandler {
         availableCommands.put("getText", new TextCommand());
         availableCommands.put("testVisibility", new VisibilityCommand());
         availableCommands.put("select", new SelectCommand());
+        availableCommands.put("execute", new ExecuteCommand());
+        availableCommands.put("executeOnElement", new ExecuteCommand());
     }
 
     @Override

@@ -41,6 +41,32 @@ public class Action {
         return this;
     }
 
+    /**
+     * execute javascript 'script'
+     */
+    public Action execute(String script) {
+        tasks.add(Task.builder()
+                .id(getTaskName())
+                .action(name)
+                .xpath("")
+                .text(script)
+                .build());
+        return this;
+    }
+
+
+    /**
+     * execute javascript 'script' on web-element identified by 'xpath'
+     */
+    public Action executeOnElement(String xpath, String script) {
+        tasks.add(Task.builder()
+                .id(getTaskName())
+                .action(name)
+                .xpath(xpath)
+                .text(script)
+                .build());
+        return this;
+    }
 
     /**
      * selects 'item' on drop-down web-element identified by 'xpath'

@@ -7,10 +7,12 @@ import static org.junit.Assert.fail;
 import lombok.val;
 import mango.Results;
 import net.mloehr.mango.BaseTest;
+import net.mloehr.mango.Timer;
 import net.mloehr.mango.WebUser;
 import net.mloehr.mango.XPathNotFoundException;
 
 import org.junit.Test;
+import org.openqa.selenium.ElementNotVisibleException;
 
 public class GoogleSearchTest extends BaseTest {
 
@@ -45,6 +47,18 @@ public class GoogleSearchTest extends BaseTest {
         on(googleSearchPage()).search("hello");
         on(googleResultsPage()).getBilderText(text);
         assertThat(text.toString(), is("Bilder"));
+    }
+
+    @Test
+    public void shouldHideGoogleLogoAndTestJavaScriptExecution() throws Exception {
+        webUser = new WebUser(GOOGLE);
+        on(googleSearchPage()).executeOnButtons("arguments[0].style.display = 'none';");
+        try {
+	        on(googleSearchPage()).search("hello");
+			fail("Missed Exception, should not happen!");
+		} catch (Exception e) {
+			assertThat(e, instanceOf(ElementNotVisibleException.class));
+		}
     }
     
     @Test

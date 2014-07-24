@@ -67,26 +67,26 @@ public class WebUser implements DriveSupport {
     }
 
     @Override
+	public void execute(String script, String xpath) throws Exception {
+    	if (xpath == null || xpath.length() == 0) {
+			((JavascriptExecutor) driver).executeScript(script);    		
+    	} else {
+	        waitForThis(xpath);
+	        if (!currentPageHas(xpath)) {
+	        	throw new XPathNotFoundException(xpath);	        	
+	        }
+        	val element = driver.findElement(By.xpath(xpath));
+			((JavascriptExecutor) driver).executeScript(script, element);
+    	}
+	}
+
+	@Override
     public WebElement forThis(String xpath) throws Exception {
         waitForThis(xpath);
         if (currentPageHas(xpath)) {
         	val element = driver.findElement(By.xpath(xpath));
-        	
-        	        
-//        	Dimension size = driver.manage().window().getSize();
-//        	logger.debug("x: {}, y: {}, width: {}, height: {}; window w:{}, h:{}", 
-//        			element.getLocation().x, element.getLocation().y, element.getSize().width, element.getSize().height, size.width, size.height);
-        	
         	String script = "arguments[0].scrollIntoView(false);";
 			((JavascriptExecutor) driver).executeScript(script, element);
-        	
-//			val maxY = element.getLocation().y +  element.getSize().height;
-//			if(maxY > size.height) {
-//				val dim = new Dimension(size.width, maxY);
-//				driver.manage().window().setSize(dim);
-//				Timer.waitFor(2000);
-//			}
-			
         	return element;
         }
         throw new XPathNotFoundException(xpath);
