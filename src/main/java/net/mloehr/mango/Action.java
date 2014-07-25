@@ -109,9 +109,9 @@ public class Action {
     }
 
     /**
-     * gets the text into 'data', of web-element identified by 'xpath'
+     * gets the 'attribute' into 'data', of web-element identified by 'xpath'
      */
-    public Action getAttribute(String xpath, String attribute, Object data) {
+    public Action getAttribute(String xpath, String attribute, StringBuilder data) {
         tasks.add(Task.builder()
                 .id(getTaskName())
                 .action(name)
