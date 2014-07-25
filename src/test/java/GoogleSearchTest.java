@@ -41,6 +41,14 @@ public class GoogleSearchTest extends BaseTest {
     }
 
     @Test
+    public void shouldGetAttribute() throws Exception {
+    	val classText = new StringBuilder();
+        webUser = new WebUser(GOOGLE);
+        on(googleSearchPage()).getSearchButtonClass(classText);
+        assertThat(classText.toString(), is("gbqfba"));
+    }
+
+    @Test
     public void shouldGetText() throws Exception {
     	val text = new StringBuilder();
         webUser = new WebUser(GOOGLE+"?hl=de");

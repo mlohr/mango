@@ -3,13 +3,14 @@ import net.mloehr.mango.Action;
 public class GoogleSearchPage {
 
     private static final String SEARCH_INPUT = "//tbody//input[1]";
-    private static final String SEARCH_BUTTON = "//button[@name='btnG']";    
+    private static final String SEARCH_BUTTON = "//button[@name='btnK']";    
+    private static final String SEARCHLOOP_BUTTON = "//button[@name='btnG']";    
 	private static final String SEARCH_BUTTON_DIV = ".//*[@id='gbqfbw']";
 
     public Action search(String text) {
         return Action.withTasks()
                 .type(SEARCH_INPUT, text)
-                .click(SEARCH_BUTTON);
+                .click(SEARCHLOOP_BUTTON);
     }
     
     public Action executeOnButtons(String script) {
@@ -24,7 +25,12 @@ public class GoogleSearchPage {
 
     public Action testButtonDisplayed(Object displayed) {
         return Action.withTasks()
-        		.testVisibility(SEARCH_BUTTON, displayed);
+        		.testVisibility(SEARCHLOOP_BUTTON, displayed);
     }
+
+	public Action getSearchButtonClass(StringBuilder data) {
+        return Action.withTasks()
+        		.getAttribute(SEARCH_BUTTON, "class", data);
+	}
 
 }

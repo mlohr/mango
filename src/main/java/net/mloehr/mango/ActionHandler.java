@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import javassist.util.proxy.MethodHandler;
 import lombok.extern.slf4j.Slf4j;
+import net.mloehr.mango.commands.AttributeCommand;
 import net.mloehr.mango.commands.ClickCommand;
 import net.mloehr.mango.commands.Command;
 import net.mloehr.mango.commands.ExecuteCommand;
@@ -25,6 +26,7 @@ public class ActionHandler implements MethodHandler {
         availableCommands.put("type", new TypeCommand());
         availableCommands.put("click", new ClickCommand());
         availableCommands.put("mapText", new TextCommand());
+        availableCommands.put("getAttribute", new AttributeCommand());
         availableCommands.put("getText", new TextCommand());
         availableCommands.put("testVisibility", new VisibilityCommand());
         availableCommands.put("select", new SelectCommand());

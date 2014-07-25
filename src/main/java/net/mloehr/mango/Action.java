@@ -108,7 +108,20 @@ public class Action {
         return this;
     }
 
-    
+    /**
+     * gets the text into 'data', of web-element identified by 'xpath'
+     */
+    public Action getAttribute(String xpath, String attribute, Object data) {
+        tasks.add(Task.builder()
+                .id(getTaskName())
+                .action(name)
+                .xpath(xpath)
+                .text(attribute)
+                .data(data)
+                .build());
+        return this;
+    }
+
     /**
      * gets the text into 'data', of web-element identified by 'xpath'
      */
