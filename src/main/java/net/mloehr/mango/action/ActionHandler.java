@@ -17,7 +17,6 @@ import net.mloehr.mango.selenium.commands.VisibilityCommand;
 
 @Slf4j
 public class ActionHandler implements MethodHandler {
-
     private final DriveSupport driver;
     private final HashMap<String, Command> availableCommands;
 
@@ -37,11 +36,16 @@ public class ActionHandler implements MethodHandler {
 
     @Override
     public Object invoke(Object proxy, Method proxyMethod, Method pageMethod, Object[] args) throws Throwable {
-        Action action = (Action) pageMethod.invoke(proxy, args);
-        for (Task task : action.getTasks()) {
-            execute(task);
-        }
-        return action;
+    	Class<?> returnType = (pageMethod.getReturnType());
+    	if( returnType.equals(Action.class)) {
+    		Action action = (Action) pageMethod.invoke(proxy, args);
+    		for (Task task : action.getTasks()) {
+    			execute(task);
+    		}
+    		return action;    		
+    	} else {
+    		return (Object) pageMethod.invoke(proxy, args);
+    	}
     }
 
     private void execute(Task task) throws Exception {

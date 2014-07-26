@@ -1,11 +1,19 @@
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import lombok.val;
+import mango.Results;
+import net.mloehr.mango.Mapper;
 import net.mloehr.mango.action.Action;
 
-public class GoogleSearchPage {
+public class GoogleSearchActions {
 
     private static final String SEARCH_INPUT = "//tbody//input[1]";
     private static final String SEARCH_BUTTON = "//button[@name='btnK']";    
     private static final String SEARCHLOOP_BUTTON = "//button[@name='btnG']";    
 	private static final String SEARCH_BUTTON_DIV = ".//*[@id='gbqfbw']";
+
+    private static final String RESULT_HEADLINES = ".//*[@id='res']//h3";
+    private static final String BILDER_LINK = ".//*[@id='hdtb_s']/div/div[2]/a";
 
     public Action search(String text) {
         return Action.withTasks()
@@ -13,6 +21,11 @@ public class GoogleSearchPage {
                 .click(SEARCHLOOP_BUTTON);
     }
     
+    public Action getSearchResults(Object results) {
+        return Action.withTasks()
+                .mapText(RESULT_HEADLINES, results, new Mapper(results, "items", "(.*)"));
+    }
+
     public Action executeOnButtons(String script) {
         return Action.withTasks()
                 .executeOnElement(SEARCH_BUTTON_DIV, script);
@@ -32,5 +45,22 @@ public class GoogleSearchPage {
         return Action.withTasks()
         		.getAttribute(SEARCH_BUTTON, "class", data);
 	}
+    
+	public Action getBilderText(StringBuilder text) {
+        return Action.withTasks()
+        		.getText(BILDER_LINK, text);
+	}
 
+	public Results searchAndReturnResults(String searchTerm) {
+    	val results = new Results();
+        search(searchTerm);
+        
+        StringBuilder displayed = new StringBuilder();
+        testButtonDisplayed(displayed);
+        assertThat(displayed.toString(), is("true"));
+
+        getSearchResults(results);
+        return results;
+	}
+	
 }

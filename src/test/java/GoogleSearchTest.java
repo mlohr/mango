@@ -5,9 +5,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import lombok.val;
-import mango.Results;
 import net.mloehr.mango.BaseTest;
-import net.mloehr.mango.Timer;
 import net.mloehr.mango.XPathNotFoundException;
 import net.mloehr.mango.selenium.WebUser;
 
@@ -20,23 +18,16 @@ public class GoogleSearchTest extends BaseTest {
     
     @Test
     public void shouldSearchResults() throws Exception {
-    	val results = new Results();
     	StringBuilder displayed;
     	
         webUser = new WebUser(GOOGLE, "network.automatic-ntlm-auth.trusted-uris=google.com;");
         assertThat(webUser.getCurrentUrl(), is(GOOGLE));
         
         displayed = new StringBuilder();
-        on(googleSearchPage()).testButtonDisplayed(displayed);
+        on(googleSearch()).testButtonDisplayed(displayed);
         assertThat(displayed.toString(), is("false"));
         
-        on(googleSearchPage()).search("hello");
-        
-        displayed = new StringBuilder();
-        on(googleSearchPage()).testButtonDisplayed(displayed);
-        assertThat(displayed.toString(), is("true"));
-
-        on(googleResultsPage()).getResults(results);
+        val results = on(googleSearch()).searchAndReturnResults("hello");
         assertThat(results.getItems(), everyItem(containsMatch("(?i)hello")));
     }
 
@@ -44,7 +35,7 @@ public class GoogleSearchTest extends BaseTest {
     public void shouldGetAttribute() throws Exception {
     	val classText = new StringBuilder();
         webUser = new WebUser(GOOGLE);
-        on(googleSearchPage()).getSearchButtonClass(classText);
+        on(googleSearch()).getSearchButtonClass(classText);
         assertThat(classText.toString(), is("gbqfba"));
     }
 
@@ -52,17 +43,17 @@ public class GoogleSearchTest extends BaseTest {
     public void shouldGetText() throws Exception {
     	val text = new StringBuilder();
         webUser = new WebUser(GOOGLE+"?hl=de");
-        on(googleSearchPage()).search("hello");
-        on(googleResultsPage()).getBilderText(text);
+        on(googleSearch()).search("hello");
+        on(googleSearch()).getBilderText(text);
         assertThat(text.toString(), is("Bilder"));
     }
 
     @Test
     public void shouldHideGoogleLogoAndTestJavaScriptExecution() throws Exception {
         webUser = new WebUser(GOOGLE);
-        on(googleSearchPage()).executeOnButtons("arguments[0].style.display = 'none';");
+        on(googleSearch()).executeOnButtons("arguments[0].style.display = 'none';");
         try {
-	        on(googleSearchPage()).search("hello");
+	        on(googleSearch()).search("hello");
 			fail("Missed Exception, should not happen!");
 		} catch (Exception e) {
 			assertThat(e, instanceOf(ElementNotVisibleException.class));
@@ -73,19 +64,15 @@ public class GoogleSearchTest extends BaseTest {
     public void shouldNotFindNonExistingElement() throws Exception {
         webUser = new WebUser(GOOGLE);
         try {
-			on(googleSearchPage()).clickOn("./*[@id='thisIsNotExisting']");
+			on(googleSearch()).clickOn("./*[@id='thisIsNotExisting']");
 			fail("Missed Exception, should not happen!");
 		} catch (Exception e) {
 			assertThat(e, instanceOf(XPathNotFoundException.class));
 		}
     }
     
-    public static Class<GoogleSearchPage> googleSearchPage() {
-        return GoogleSearchPage.class;
-    }
-
-    public static Class<GoogleResultsPage> googleResultsPage() {
-        return GoogleResultsPage.class;
+    public static Class<GoogleSearchActions> googleSearch() {
+        return GoogleSearchActions.class;
     }
 
 }
