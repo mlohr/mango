@@ -1,4 +1,4 @@
-package net.mloehr.mango;
+package net.mloehr.mango.action;
 
 import lombok.Getter;
 import lombok.NonNull;
@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import net.mloehr.mango.Mapper;
 
 @RequiredArgsConstructor
 public class Action {

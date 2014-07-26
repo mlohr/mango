@@ -1,4 +1,4 @@
-package net.mloehr.mango;
+package net.mloehr.mango.selenium;
 
 import java.util.List;
 

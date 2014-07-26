@@ -1,18 +1,19 @@
-package net.mloehr.mango;
+package net.mloehr.mango.action;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
 import javassist.util.proxy.MethodHandler;
 import lombok.extern.slf4j.Slf4j;
-import net.mloehr.mango.commands.AttributeCommand;
-import net.mloehr.mango.commands.ClickCommand;
-import net.mloehr.mango.commands.Command;
-import net.mloehr.mango.commands.ExecuteCommand;
-import net.mloehr.mango.commands.SelectCommand;
-import net.mloehr.mango.commands.TextCommand;
-import net.mloehr.mango.commands.TypeCommand;
-import net.mloehr.mango.commands.VisibilityCommand;
+import net.mloehr.mango.selenium.DriveSupport;
+import net.mloehr.mango.selenium.commands.AttributeCommand;
+import net.mloehr.mango.selenium.commands.ClickCommand;
+import net.mloehr.mango.selenium.commands.Command;
+import net.mloehr.mango.selenium.commands.ExecuteCommand;
+import net.mloehr.mango.selenium.commands.SelectCommand;
+import net.mloehr.mango.selenium.commands.TextCommand;
+import net.mloehr.mango.selenium.commands.TypeCommand;
+import net.mloehr.mango.selenium.commands.VisibilityCommand;
 
 @Slf4j
 public class ActionHandler implements MethodHandler {

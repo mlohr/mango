@@ -1,5 +1,6 @@
-package net.mloehr.mango;
+package net.mloehr.mango.action;
 
+import net.mloehr.mango.Mapper;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.experimental.Builder;

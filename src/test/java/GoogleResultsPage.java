@@ -1,5 +1,5 @@
-import net.mloehr.mango.Action;
 import net.mloehr.mango.Mapper;
+import net.mloehr.mango.action.Action;
 
 public class GoogleResultsPage {
 

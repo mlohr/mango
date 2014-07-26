@@ -8,8 +8,8 @@ import lombok.val;
 import mango.Results;
 import net.mloehr.mango.BaseTest;
 import net.mloehr.mango.Timer;
-import net.mloehr.mango.WebUser;
 import net.mloehr.mango.XPathNotFoundException;
+import net.mloehr.mango.selenium.WebUser;
 
 import org.junit.Test;
 import org.openqa.selenium.ElementNotVisibleException;

@@ -1,4 +1,4 @@
-import net.mloehr.mango.Action;
+import net.mloehr.mango.action.Action;
 
 public class GoogleSearchPage {
 

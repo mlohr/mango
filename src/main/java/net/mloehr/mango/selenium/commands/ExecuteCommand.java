@@ -1,7 +1,7 @@
-package net.mloehr.mango.commands;
+package net.mloehr.mango.selenium.commands;
 
-import net.mloehr.mango.DriveSupport;
-import net.mloehr.mango.Task;
+import net.mloehr.mango.action.Task;
+import net.mloehr.mango.selenium.DriveSupport;
 
 public class ExecuteCommand implements Command {
 

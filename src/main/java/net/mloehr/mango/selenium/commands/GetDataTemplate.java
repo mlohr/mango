@@ -1,11 +1,11 @@
-package net.mloehr.mango.commands;
+package net.mloehr.mango.selenium.commands;
 
 import java.util.List;
 
 import lombok.val;
-import net.mloehr.mango.DriveSupport;
-import net.mloehr.mango.Task;
 import net.mloehr.mango.Timer;
+import net.mloehr.mango.action.Task;
+import net.mloehr.mango.selenium.DriveSupport;
 
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;

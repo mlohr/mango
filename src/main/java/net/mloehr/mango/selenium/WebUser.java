@@ -1,4 +1,4 @@
-package net.mloehr.mango;
+package net.mloehr.mango.selenium;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
 
 import lombok.val;
 import lombok.extern.slf4j.Slf4j;
+import net.mloehr.mango.Timer;
+import net.mloehr.mango.XPathNotFoundException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
