@@ -1,10 +1,15 @@
+package net.mloehr.mango.actions;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import lombok.val;
-import mango.Results;
+import lombok.extern.slf4j.Slf4j;
 import net.mloehr.mango.Mapper;
 import net.mloehr.mango.action.Action;
+import net.mloehr.mango.action.Result;
+import net.mloehr.mango.model.Results;
+import net.mloehr.mango.selenium.WebUser;
 
+@Slf4j
 public class GoogleSearchActions {
 
     private static final String SEARCH_INPUT = "//tbody//input[1]";
@@ -19,6 +24,22 @@ public class GoogleSearchActions {
         return Action.withTasks()
                 .type(SEARCH_INPUT, text)
                 .click(SEARCHLOOP_BUTTON);
+    }
+
+    public int getBrowserHeight() {
+    	val result = new Result();
+    	evalScript("return window.outerHeight", result);
+    	return ((Long)result.getValue()).intValue();
+    }
+
+    public int getBrowserWidth() {
+    	val result = new Result();
+    	evalScript("return window.outerWidth", result);
+    	return ((Long)result.getValue()).intValue();
+    }
+    
+    protected Action evalScript(String script, Result result) {
+        return Action.withTasks().eval(script, result);
     }
     
     public Action getSearchResults(Object results) {

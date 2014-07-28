@@ -30,6 +30,7 @@ public class ActionHandler implements MethodHandler {
         availableCommands.put("getText", new TextCommand());
         availableCommands.put("testVisibility", new VisibilityCommand());
         availableCommands.put("select", new SelectCommand());
+        availableCommands.put("eval", new ExecuteCommand());
         availableCommands.put("execute", new ExecuteCommand());
         availableCommands.put("executeOnElement", new ExecuteCommand());
     }

@@ -44,6 +44,20 @@ public class Action {
     }
 
     /**
+     * evalutes javascript 'script' into 'result'
+     */
+    public Action eval(String script, Result result) {
+        tasks.add(Task.builder()
+                .id(getTaskName())
+                .action(name)
+                .xpath("")
+                .text(script)
+                .result(result)
+                .build());
+        return this;
+    }
+
+    /**
      * execute javascript 'script'
      */
     public Action execute(String script) {
@@ -55,7 +69,6 @@ public class Action {
                 .build());
         return this;
     }
-
 
     /**
      * execute javascript 'script' on web-element identified by 'xpath'

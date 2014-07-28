@@ -23,6 +23,10 @@ public class Task {
     
     private Mapper mapper;
     
-    private Object result;
+    private Result result = new Result();
+
+	public void setResultValue(Object result) {
+		this.result.setValue(result);
+	}
 
 }

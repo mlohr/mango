@@ -21,12 +21,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
-import org.slf4j.LoggerFactory;
 
 @Slf4j
 public class WebUser implements DriveSupport {
 	 
-    private WebDriver driver;
+    private static final String MANGO_BROWSER_HEIGHT = "mango.browser-height";
+    private static final String MANGO_BROWSER_MIN_HEIGHT = "mango.browser-min-height";
+    private static final String MANGO_BROWSER_WIDTH = "mango.browser-width";
+    private static final String MANGO_BROWSER_MIN_WIDTH = "mango.browser-min-width";
+    
+	private WebDriver driver;
     private Timer timer;
 
     public WebUser(String url) {
@@ -41,24 +45,10 @@ public class WebUser implements DriveSupport {
         driver.get(url);
         timer = new Timer(Timer.TIMEOUT_IN_SECONDS);
         
-        JavascriptExecutor js = (JavascriptExecutor)driver;
-        Long height = (Long)js.executeScript("return screen.height");
-    	Dimension size = driver.manage().window().getSize();
-		val dim = new Dimension(size.width, height.intValue());
-		driver.manage().window().setSize(dim);
-
+        updateBrowserSize(preferences);
     }
 
-	private void parseOptions(Properties preferences, String options) {
-		if (options != null && options != "") {
-    		for (val entry: options.split(";")) {
-    			val pair = entry.split("=");
-    			preferences.setProperty(pair[0], pair[1]);
-    		}
-    	}
-	}
-
-    public String getCurrentUrl() {
+	public String getCurrentUrl() {
         return driver.getCurrentUrl();
     }
 
@@ -67,17 +57,16 @@ public class WebUser implements DriveSupport {
     }
 
     @Override
-	public void execute(String script, String xpath) throws Exception {
+	public Object execute(String script, String xpath) throws Exception {
     	if (xpath == null || xpath.length() == 0) {
-			((JavascriptExecutor) driver).executeScript(script);    		
-    	} else {
-	        waitForThis(xpath);
-	        if (!currentPageHas(xpath)) {
-	        	throw new XPathNotFoundException(xpath);	        	
-	        }
-        	val element = driver.findElement(By.xpath(xpath));
-			((JavascriptExecutor) driver).executeScript(script, element);
-    	}
+			return ((JavascriptExecutor) driver).executeScript(script);    		
+    	} 
+        waitForThis(xpath);
+        if (!currentPageHas(xpath)) {
+        	throw new XPathNotFoundException(xpath);	        	
+        }
+    	val element = driver.findElement(By.xpath(xpath));
+		return ((JavascriptExecutor) driver).executeScript(script, element);    	
 	}
 
 	@Override
@@ -103,7 +92,52 @@ public class WebUser implements DriveSupport {
         throw new XPathNotFoundException(xpath);
     }
     
-    private void waitForThis(String xpath) {
+    private void updateBrowserSize(Properties preferences) {
+		Dimension browserSize = driver.manage().window().getSize();
+	    int browserWidth = browserSize.width;
+	    int browserHeight = browserSize.height;
+	    JavascriptExecutor js = (JavascriptExecutor)driver;
+	    int screenWidth = ((Long)js.executeScript("return screen.width")).intValue();
+	    int screenHeight = ((Long)js.executeScript("return screen.height")).intValue();
+	
+	    if (preferences.containsKey(MANGO_BROWSER_HEIGHT)) {
+	    	int requestedHeigth = Integer.valueOf(preferences.getProperty(MANGO_BROWSER_HEIGHT)).intValue();
+	    	if (requestedHeigth <= screenHeight) {
+	    		browserHeight = requestedHeigth;
+	    	}
+	    }
+	    if (preferences.containsKey(MANGO_BROWSER_MIN_HEIGHT)) {
+	    	int requestedHeigth = Integer.valueOf(preferences.getProperty(MANGO_BROWSER_MIN_HEIGHT)).intValue();
+	    	if (requestedHeigth > browserHeight) {
+	    		browserHeight = requestedHeigth;
+	    	}
+	    }
+	    if (preferences.containsKey(MANGO_BROWSER_WIDTH)) {
+	    	int requestedWidth = Integer.valueOf(preferences.getProperty(MANGO_BROWSER_WIDTH)).intValue();
+	    	if (requestedWidth <= screenWidth) {
+	    		browserWidth = requestedWidth;
+	    	}
+	    }
+	    if (preferences.containsKey(MANGO_BROWSER_MIN_WIDTH)) {
+	    	int requestedWidth = Integer.valueOf(preferences.getProperty(MANGO_BROWSER_MIN_WIDTH)).intValue();
+	    	if (requestedWidth > browserWidth) {
+	    		browserWidth = requestedWidth;
+	    	}
+	    }
+		val dim = new Dimension(browserWidth, browserHeight);
+		driver.manage().window().setSize(dim);
+	}
+
+	private void parseOptions(Properties preferences, String options) {
+		if (options != null && options != "") {
+			for (val entry: options.split(";")) {
+				val pair = entry.split("=");
+				preferences.setProperty(pair[0], pair[1]);
+			}
+		}
+	}
+
+	private void waitForThis(String xpath) {
         timer.reset();
         while (timer.isNotExpired()) {
             if (currentPageHas(xpath)) {

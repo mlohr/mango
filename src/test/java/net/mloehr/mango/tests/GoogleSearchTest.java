@@ -1,3 +1,4 @@
+package net.mloehr.mango.tests;
 import static net.mloehr.mango.Matchers.containsMatch;
 import static org.hamcrest.CoreMatchers.everyItem;
 import static org.hamcrest.CoreMatchers.is;
@@ -7,6 +8,7 @@ import static org.junit.Assert.fail;
 import lombok.val;
 import net.mloehr.mango.BaseTest;
 import net.mloehr.mango.XPathNotFoundException;
+import net.mloehr.mango.actions.GoogleSearchActions;
 import net.mloehr.mango.selenium.WebUser;
 
 import org.junit.Test;
