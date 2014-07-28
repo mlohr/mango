@@ -8,7 +8,9 @@ public class ExecuteCommand implements Command {
 	@Override
 	public void execute(DriveSupport driver, Task task) throws Exception {
 		Object eval = driver.execute(task.getText(), task.getXpath());	
-		task.setResultValue(eval);
+		if (task.getResult() != null) {
+			task.setResultValue(eval);			
+		}
 	}
 
 }

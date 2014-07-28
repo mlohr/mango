@@ -2,14 +2,11 @@ package net.mloehr.mango.actions;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import lombok.val;
-import lombok.extern.slf4j.Slf4j;
 import net.mloehr.mango.Mapper;
 import net.mloehr.mango.action.Action;
 import net.mloehr.mango.action.Result;
 import net.mloehr.mango.model.Results;
-import net.mloehr.mango.selenium.WebUser;
 
-@Slf4j
 public class GoogleSearchActions {
 
     private static final String SEARCH_INPUT = "//tbody//input[1]";
