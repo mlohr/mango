@@ -51,10 +51,11 @@ public class ActionHandler implements MethodHandler {
     private void execute(Task task) throws Exception {
         Command command = availableCommands.get(task.getId());
         if (command != null) {
-            log.info("{}.{} ({})", task.getAction(), task.getId(), task);
+            log.debug("{}.{} ({})", task.getAction(), task.getId(), task);
             command.execute(driver, task);
         } else {
-            log.warn("{}.{} NOT implemented! ({})", task.getAction(), task.getId(), task);
+            log.error("{}.{} NOT implemented! ({})", task.getAction(), task.getId(), task);
+            throw new RuntimeException("Command not implemented!");
         }
     }
 

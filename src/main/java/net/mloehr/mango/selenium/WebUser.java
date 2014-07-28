@@ -25,8 +25,6 @@ import org.slf4j.LoggerFactory;
 
 @Slf4j
 public class WebUser implements DriveSupport {
-
-	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(WebUser.class);
 	 
     private WebDriver driver;
     private Timer timer;
@@ -142,7 +140,7 @@ public class WebUser implements DriveSupport {
 		File resources = new File("./resources");
     	String[] files = resources.list();
     	if (files == null) {
-    		logger.info("no extensions found");
+    		log.debug("no extensions found");
     		return;
     	}
     	for (String file : files) {
@@ -156,9 +154,9 @@ public class WebUser implements DriveSupport {
 			try {
 				profile.addExtension(extension);
 				preferences.setProperty("extensions."+name+".currentVersion", version);					
-				logger.info("added extension {} {}", name, version);
+				log.debug("added extension {} {}", name, version);
 			} catch (IOException e) {
-				logger.warn("adding extension {}, unexpected: {}",name, e);
+				log.debug("adding extension {}, unexpected: {}",name, e);
 			}    		
     	}
 		
