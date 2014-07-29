@@ -2,7 +2,7 @@ package net.mloehr.mango;
 
 public class Timer {
 
-    public static final int MILLISECONDS_BETWEEN_ELEMENT_CHECK = 500;
+    public static final int MILLISECONDS_BETWEEN_ELEMENT_CHECK = 200;
     public static final int TIMEOUT_IN_SECONDS = 5;
 
     private long expiryTime;
