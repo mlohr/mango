@@ -31,6 +31,46 @@ public class Action {
         return this;
     }
 
+
+    /**
+     * checks checkbox identified by 'xpath' unless checked already
+     */
+    public Action check(String xpath) {
+        tasks.add(Task.builder()
+                .id(getTaskName())
+                .action(name)
+                .xpath(xpath)
+                .text("check")
+                .build());
+        return this;
+    }
+
+    /**
+     * unchecks checkbox identified by 'xpath' if checked
+     */
+    public Action uncheck(String xpath) {
+        tasks.add(Task.builder()
+                .id(getTaskName())
+                .action(name)
+                .xpath(xpath)
+                .text("uncheck")
+                .build());
+        return this;
+    }
+
+    /**
+     * checkes if checkbox identified by 'xpath' if checked
+     */
+    public Action isChecked(String xpath, Result result) {
+        tasks.add(Task.builder()
+                .id(getTaskName())
+                .action(name)
+                .xpath(xpath)
+                .result(result)
+                .build());
+        return this;
+    }
+
     /**
      * clicks on web-element identified by 'xpath'
      */
