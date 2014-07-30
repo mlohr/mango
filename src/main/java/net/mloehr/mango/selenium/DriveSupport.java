@@ -12,4 +12,6 @@ public interface DriveSupport {
 
 	public abstract Object execute(String script, String xpath) throws Exception;
 
+	public abstract void pause();
+
 }

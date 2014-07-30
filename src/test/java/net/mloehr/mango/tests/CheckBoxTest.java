@@ -1,7 +1,9 @@
 package net.mloehr.mango.tests;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 import net.mloehr.mango.BaseTest;
 import net.mloehr.mango.action.Result;
 import net.mloehr.mango.actions.UtexasCbActions;
@@ -17,9 +19,9 @@ public class CheckBoxTest extends BaseTest {
 	public void testCheck() {
         webUser = new WebUser(URL);
         Result result = new Result();
-        on(uTexasCb()).checkGraphic(result);
+        on(uTexasCb()).checkValue(UtexasCbActions.GRAPHIC_CHECKBOX, result);
         assertThat(result.getValue().toString(), is("true"));
-        on(uTexasCb()).checkGraphic(result);      
+        on(uTexasCb()).checkValue(UtexasCbActions.GRAPHIC_CHECKBOX, result);      
         assertThat(result.getValue().toString(), is("true"));
         on(uTexasCb()).UncheckGraphic(result);      
         assertThat(result.getValue().toString(), is("false"));
@@ -27,6 +29,35 @@ public class CheckBoxTest extends BaseTest {
         assertThat(result.getValue().toString(), is("false"));
 	}
 
+	@Test
+	public void testClickingXPathSelectingMultipleElements() {
+        webUser = new WebUser(URL);
+        Result result = new Result();
+		on(uTexasCb()).Uncheck(UtexasCbActions.FIRST_CHECKBOX);
+		on(uTexasCb()).Uncheck(UtexasCbActions.GRAPHIC_CHECKBOX);
+		on(uTexasCb()).Uncheck(UtexasCbActions.LAST_CHECKBOX);
+		
+		on(uTexasCb()).clickCheckbox(-1);
+        on(uTexasCb()).checkValue(UtexasCbActions.LAST_CHECKBOX,result);
+        assertThat(result.getValue().toString(), is("true"));		
+
+		on(uTexasCb()).clickCheckbox(0);
+        on(uTexasCb()).checkValue(UtexasCbActions.FIRST_CHECKBOX,result);
+        assertThat(result.getValue().toString(), is("true"));	
+        
+		on(uTexasCb()).clickCheckbox(1);
+        on(uTexasCb()).checkValue(UtexasCbActions.GRAPHIC_CHECKBOX,result);
+        assertThat(result.getValue().toString(), is("true"));		
+
+		try {
+			on(uTexasCb()).clickCheckbox(1000);
+			fail("Should catch index out of bounds.");
+		} catch (Exception e) {
+			assertThat(e, instanceOf(IndexOutOfBoundsException.class));
+		}
+
+}
+	
     public static Class<UtexasCbActions> uTexasCb() {
         return UtexasCbActions.class;
     }

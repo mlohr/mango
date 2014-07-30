@@ -50,7 +50,13 @@ public class ActionHandler implements MethodHandler {
     		}
     		return action;    		
     	} else {
-    		return (Object) pageMethod.invoke(proxy, args);
+    		Object result = null;
+    		try {
+				result = pageMethod.invoke(proxy, args);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+    		return result;
     	}
     }
 
@@ -59,6 +65,7 @@ public class ActionHandler implements MethodHandler {
         if (command != null) {
             log.debug("{}.{} ({})", task.getAction(), task.getId(), task);
             command.execute(driver, task);
+            driver.pause();
         } else {
             log.error("{}.{} NOT implemented! ({})", task.getAction(), task.getId(), task);
             throw new RuntimeException("Command not implemented!");

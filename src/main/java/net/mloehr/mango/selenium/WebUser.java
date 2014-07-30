@@ -29,9 +29,12 @@ public class WebUser implements DriveSupport {
     private static final String MANGO_BROWSER_MIN_HEIGHT = "mango.browser-min-height";
     private static final String MANGO_BROWSER_WIDTH = "mango.browser-width";
     private static final String MANGO_BROWSER_MIN_WIDTH = "mango.browser-min-width";
+    private static final String MANGO_EXECUTION_DELAY = "mango.execution-delay";
     
 	private WebDriver driver;
     private Timer timer;
+	private int executionDelay = 0;
+	private String script = "arguments[0].scrollIntoView(true); arguments[0].style='border: 3px dashed red';";
 
     public WebUser(String url) {
     	this(url, "");
@@ -46,6 +49,10 @@ public class WebUser implements DriveSupport {
         timer = new Timer(Timer.TIMEOUT_IN_SECONDS);
         
         updateBrowserSize(preferences);
+        
+	    if (preferences.containsKey(MANGO_EXECUTION_DELAY)) {
+	    	executionDelay = Integer.valueOf(preferences.getProperty(MANGO_EXECUTION_DELAY)).intValue();
+	    }
     }
 
 	public String getCurrentUrl() {
@@ -74,24 +81,27 @@ public class WebUser implements DriveSupport {
         waitForThis(xpath);
         if (currentPageHas(xpath)) {
         	val element = driver.findElement(By.xpath(xpath));
-        	String script = "arguments[0].scrollIntoView(false);";
-			((JavascriptExecutor) driver).executeScript(script, element);
+        	((JavascriptExecutor) driver).executeScript(script, element);
         	return element;
         }
         throw new XPathNotFoundException(xpath);
     }
 
-    @Override
-    public List<WebElement> forThese(String xpath) throws Exception {
-        waitForThis(xpath);
-        if (currentPageHas(xpath)) {
-        	val elements = driver.findElements(By.xpath(xpath));
-        	((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", elements.get(0));
+	@Override
+	public List<WebElement> forThese(String xpath) throws Exception {
+	    waitForThis(xpath);
+	    if (currentPageHas(xpath)) {
+	    	val elements = driver.findElements(By.xpath(xpath));
+	    	((JavascriptExecutor) driver).executeScript(script, elements.get(0));
 			return elements;
-        }
-        throw new XPathNotFoundException(xpath);
-    }
-    
+	    }
+	    throw new XPathNotFoundException(xpath);
+	}
+
+	public void pause() {
+		Timer.waitFor(executionDelay);
+	}
+
     private void updateBrowserSize(Properties preferences) {
 		Dimension browserSize = driver.manage().window().getSize();
 	    int browserWidth = browserSize.width;

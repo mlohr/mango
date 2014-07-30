@@ -84,6 +84,25 @@ public class Action {
     }
 
     /**
+     * clicks on the one web-element identified by 'xpath', when an array
+     * can be selected and the web-element is identified by 'index'
+     * -> index of 0 clicks on the first element.
+     * -> index of 1 clicks on the second element, etc..
+     * Negative values start from last element:
+     * -> index of -1 clicks on the last element.
+     * -> index of -2 clicks on the second-last element, etc..
+     */
+    public Action click(String xpath, int index) {
+        tasks.add(Task.builder()
+                .id(getTaskName())
+                .action(name)
+                .xpath(xpath)
+                .text(String.valueOf(index))
+                .build());
+        return this;
+    }
+
+    /**
      * evalutes javascript 'script' into 'result'
      */
     public Action eval(String script, Result result) {
