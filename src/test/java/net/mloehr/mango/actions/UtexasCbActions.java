@@ -8,8 +8,7 @@ public class UtexasCbActions {
 	public static final String FIRST_CHECKBOX = ".//*[@id='programming']";
 	public static final String GRAPHIC_CHECKBOX = ".//*[@id='graphics']";
 	public static final String LAST_CHECKBOX = ".//*[@id='page']";
-	
-	private static final String ALL_CHECKBOXES = ".//input[@type='checkbox']";
+	public static final String ALL_CHECKBOXES = ".//input[@type='checkbox']";
 	
 	public Action checkValue(String xpath, Result result) {
 		return Action.withTasks()
@@ -31,5 +30,10 @@ public class UtexasCbActions {
 	public Action Uncheck(String xpath) {
 		return Action.withTasks()
 				.uncheck(xpath);
+	}
+
+	public Action count(String xpath, Result result) {
+		return Action.withTasks()
+				.count(xpath, result);
 	}
 }

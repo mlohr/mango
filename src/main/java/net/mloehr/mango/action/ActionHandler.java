@@ -10,6 +10,7 @@ import net.mloehr.mango.selenium.commands.AttributeCommand;
 import net.mloehr.mango.selenium.commands.CheckCommand;
 import net.mloehr.mango.selenium.commands.ClickCommand;
 import net.mloehr.mango.selenium.commands.Command;
+import net.mloehr.mango.selenium.commands.CountCommand;
 import net.mloehr.mango.selenium.commands.ExecuteCommand;
 import net.mloehr.mango.selenium.commands.IsCheckedCommand;
 import net.mloehr.mango.selenium.commands.SelectCommand;
@@ -25,19 +26,20 @@ public class ActionHandler implements MethodHandler {
     public ActionHandler(DriveSupport driver) {
         this.driver = driver;
         availableCommands = new HashMap<>();
-        availableCommands.put("type", new TypeCommand());
-        availableCommands.put("click", new ClickCommand());
-        availableCommands.put("mapText", new TextCommand());
-        availableCommands.put("getAttribute", new AttributeCommand());
-        availableCommands.put("getText", new TextCommand());
-        availableCommands.put("testVisibility", new VisibilityCommand());
-        availableCommands.put("select", new SelectCommand());
         availableCommands.put("check", new CheckCommand());
-        availableCommands.put("uncheck", new CheckCommand());
-        availableCommands.put("isChecked", new IsCheckedCommand());
+        availableCommands.put("click", new ClickCommand());
+        availableCommands.put("count", new CountCommand());
         availableCommands.put("eval", new ExecuteCommand());
         availableCommands.put("execute", new ExecuteCommand());
         availableCommands.put("executeOnElement", new ExecuteCommand());
+        availableCommands.put("getAttribute", new AttributeCommand());
+        availableCommands.put("getText", new TextCommand());
+        availableCommands.put("isChecked", new IsCheckedCommand());
+        availableCommands.put("mapText", new TextCommand());
+        availableCommands.put("select", new SelectCommand());
+        availableCommands.put("testVisibility", new VisibilityCommand());
+        availableCommands.put("type", new TypeCommand());
+        availableCommands.put("uncheck", new CheckCommand());
     }
 
     @Override

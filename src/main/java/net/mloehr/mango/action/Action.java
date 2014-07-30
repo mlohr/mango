@@ -103,6 +103,19 @@ public class Action {
     }
 
     /**
+     * counts the number on web-elements identified by 'xpath'
+     */
+    public Action count(String xpath, Result result) {
+        tasks.add(Task.builder()
+                .id(getTaskName())
+                .action(name)
+                .xpath(xpath)
+                .result(result)
+                .build());
+        return this;
+    }
+
+    /**
      * evalutes javascript 'script' into 'result'
      */
     public Action eval(String script, Result result) {

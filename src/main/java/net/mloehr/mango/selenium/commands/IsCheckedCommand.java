@@ -10,9 +10,9 @@ public class IsCheckedCommand implements Command {
     public void execute(DriveSupport driver, Task task) throws Exception {
     	val element = driver.forThis(task.getXpath());
     	if (element.isSelected()) {
-    		task.setResultValue(Boolean.TRUE);		
+    		task.setResultValue("true");		
     	} else {
-    		task.setResultValue(Boolean.FALSE);		    		
+    		task.setResultValue("false");		    		
     	}
     }
 
