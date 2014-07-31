@@ -56,7 +56,7 @@ public class ActionHandler implements MethodHandler {
     		try {
 				result = pageMethod.invoke(proxy, args);
 			} catch (Exception e) {
-				e.printStackTrace();
+				throw e.getCause();
 			}
     		return result;
     	}
