@@ -58,7 +58,7 @@ public class WebUser implements DriveSupport {
 	    	executionDelay = Integer.valueOf(preferences.getProperty(MANGO_EXECUTION_DELAY)).intValue();
 	    }
 	    if (preferences.containsKey(MANGO_EXECUTION_TRACER)) {
-	    	showTracer = Boolean.valueOf(preferences.getProperty(MANGO_EXECUTION_DELAY));
+	    	showTracer = Boolean.valueOf(preferences.getProperty(MANGO_EXECUTION_TRACER));
 	    }
 
     }
