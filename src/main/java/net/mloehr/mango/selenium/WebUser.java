@@ -51,16 +51,7 @@ public class WebUser implements DriveSupport {
         driver.manage().deleteAllCookies();
         driver.get(url);
         timer = new Timer(Timer.TIMEOUT_IN_SECONDS);
-        
-        updateBrowserSize(preferences);
-        
-	    if (preferences.containsKey(MANGO_EXECUTION_DELAY)) {
-	    	executionDelay = Integer.valueOf(preferences.getProperty(MANGO_EXECUTION_DELAY)).intValue();
-	    }
-	    if (preferences.containsKey(MANGO_EXECUTION_TRACER)) {
-	    	showTracer = Boolean.valueOf(preferences.getProperty(MANGO_EXECUTION_TRACER));
-	    }
-
+        handleMangoProperties(preferences);
     }
 
 	public String getCurrentUrl() {
@@ -104,7 +95,7 @@ public class WebUser implements DriveSupport {
 	    waitForThis(xpath);
 	    if (currentPageHas(xpath)) {
 	    	val elements = driver.findElements(By.xpath(xpath));
-        	executeJavaScript(elements.get(0));
+        	executeJavaScript(elements);
 			return elements;
 	    }
 	    throw new XPathNotFoundException(xpath);
@@ -114,14 +105,32 @@ public class WebUser implements DriveSupport {
 		Timer.waitFor(executionDelay);
 	}
 
-    private void executeJavaScript(final org.openqa.selenium.WebElement element) {
+    private void waitForThis(String xpath) {
+	    timer.reset();
+	    while (timer.isNotExpired()) {
+	        if (currentPageHas(xpath)) {
+	            return;
+	        } else {
+	            Timer.waitFor(Timer.MILLISECONDS_BETWEEN_ELEMENT_CHECK);
+	        }
+	    }
+	    log.warn("Time-out after {} seconds for xpath {}",timer.getTimeOut(), xpath);
+	}
+
+	private void executeJavaScript(List<WebElement> elements) {
+		for(val element: elements) {
+			executeJavaScript(element);
+		}
+	}
+
+	private void executeJavaScript(final org.openqa.selenium.WebElement element) {
 		((JavascriptExecutor) driver).executeScript(scrollIntoViewScript, element);
 		if (showTracer) {
 			((JavascriptExecutor) driver).executeScript(tracerScript, element);	    		
 		}
 	}
 
-	private void updateBrowserSize(Properties preferences) {
+	private void handleMangoProperties(Properties preferences) {
 		Dimension browserSize = driver.manage().window().getSize();
 	    int browserWidth = browserSize.width;
 	    int browserHeight = browserSize.height;
@@ -155,6 +164,13 @@ public class WebUser implements DriveSupport {
 	    }
 		val dim = new Dimension(browserWidth, browserHeight);
 		driver.manage().window().setSize(dim);
+		
+	    if (preferences.containsKey(MANGO_EXECUTION_DELAY)) {
+	    	executionDelay = Integer.valueOf(preferences.getProperty(MANGO_EXECUTION_DELAY)).intValue();
+	    }
+	    if (preferences.containsKey(MANGO_EXECUTION_TRACER)) {
+	    	showTracer = Boolean.valueOf(preferences.getProperty(MANGO_EXECUTION_TRACER));
+	    }
 	}
 
 	private void parseOptions(Properties preferences, String options) {
@@ -166,18 +182,7 @@ public class WebUser implements DriveSupport {
 		}
 	}
 
-	private void waitForThis(String xpath) {
-        timer.reset();
-        while (timer.isNotExpired()) {
-            if (currentPageHas(xpath)) {
-                return;
-            } else {
-                Timer.waitFor(Timer.MILLISECONDS_BETWEEN_ELEMENT_CHECK);
-            }
-        }
-    }
-
-    private boolean currentPageHas(String xpath) {
+	private boolean currentPageHas(String xpath) {
         try {
             driver.findElement(By.xpath(xpath));
             return true;
@@ -234,5 +239,4 @@ public class WebUser implements DriveSupport {
     	}
 		return result;
 	}
-
 }
