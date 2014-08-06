@@ -19,6 +19,9 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 
@@ -31,6 +34,7 @@ public class WebUser implements DriveSupport {
     private static final String MANGO_BROWSER_MIN_WIDTH = "mango.browser-min-width";
     private static final String MANGO_EXECUTION_DELAY = "mango.execution-delay";
     private static final String MANGO_EXECUTION_TRACER = "mango.execution-tracer";
+    private static final String MANGO_EXECUTION_RELOAD = "mango.execution-reload";
     
     private static final String tracerScript = "arguments[0].style='border: 3px dashed red';";
     private static final String scrollIntoViewScript = "arguments[0].scrollIntoView(true);";
@@ -45,13 +49,14 @@ public class WebUser implements DriveSupport {
     }
     
     public WebUser(String url, String options) {
+    	timer = new Timer(Timer.TIMEOUT_IN_SECONDS);
     	Properties preferences = new Properties();
     	parseOptions(preferences, options);
-	    driver = new FirefoxDriver(useExtensionsAndAcceptUntrustedCertificates(preferences));
+    	
+   	    driver = new FirefoxDriver(useExtensionsAndAcceptUntrustedCertificates(preferences));
         driver.manage().deleteAllCookies();
         driver.get(url);
-        timer = new Timer(Timer.TIMEOUT_IN_SECONDS);
-        handleMangoProperties(preferences);
+        handleMangoProperties(preferences, url);
     }
 
 	public String getCurrentUrl() {
@@ -130,7 +135,7 @@ public class WebUser implements DriveSupport {
 		}
 	}
 
-	private void handleMangoProperties(Properties preferences) {
+	private void handleMangoProperties(Properties preferences, String url) {
 		Dimension browserSize = driver.manage().window().getSize();
 	    int browserWidth = browserSize.width;
 	    int browserHeight = browserSize.height;
@@ -170,6 +175,13 @@ public class WebUser implements DriveSupport {
 	    }
 	    if (preferences.containsKey(MANGO_EXECUTION_TRACER)) {
 	    	showTracer = Boolean.valueOf(preferences.getProperty(MANGO_EXECUTION_TRACER));
+	    }
+	    if (preferences.containsKey(MANGO_EXECUTION_RELOAD)) {
+	    	if (Boolean.valueOf(preferences.getProperty(MANGO_EXECUTION_RELOAD))) {
+	    		val protocol = url.substring(0, url.indexOf("//")+2);
+	    		val address = url.substring(url.indexOf("@")+1, url.length());
+	    		driver.get(protocol+address);
+	    	}
 	    }
 	}
 
