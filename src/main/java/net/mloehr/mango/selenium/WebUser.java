@@ -19,9 +19,6 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeDriverService;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.interactions.Actions;
@@ -62,6 +59,14 @@ public class WebUser implements DriveSupport {
 
 	public String getCurrentUrl() {
         return driver.getCurrentUrl();
+    }
+
+	public void goTo(String url) {
+         driver.get(url);
+    }
+
+	public void goBack() {
+         driver.navigate().back();
     }
 
 	public void refreshPage() {
