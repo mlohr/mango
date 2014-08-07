@@ -229,5 +229,15 @@ public class Action {
     private String getTaskName() {
         return new Exception().getStackTrace()[1].getMethodName();
     }
+    
+    public Action slide(String xpath, int xCoordinate, int yCoordinate) {
+        tasks.add(Task.builder()
+                .id(getTaskName())
+                .action(name)
+                .xpath(xpath)
+                .text(String.valueOf(xCoordinate)+","+String.valueOf(yCoordinate))
+                .build());
+        return this;
+    }
 
 }
