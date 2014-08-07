@@ -14,6 +14,7 @@ import net.mloehr.mango.selenium.commands.CountCommand;
 import net.mloehr.mango.selenium.commands.ExecuteCommand;
 import net.mloehr.mango.selenium.commands.IsCheckedCommand;
 import net.mloehr.mango.selenium.commands.SelectCommand;
+import net.mloehr.mango.selenium.commands.SlideCommand;
 import net.mloehr.mango.selenium.commands.TextCommand;
 import net.mloehr.mango.selenium.commands.TypeCommand;
 import net.mloehr.mango.selenium.commands.VisibilityCommand;
@@ -40,6 +41,7 @@ public class ActionHandler implements MethodHandler {
         availableCommands.put("testVisibility", new VisibilityCommand());
         availableCommands.put("type", new TypeCommand());
         availableCommands.put("uncheck", new CheckCommand());
+        availableCommands.put("slide", new SlideCommand());
     }
 
     @Override

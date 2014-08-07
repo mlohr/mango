@@ -24,6 +24,7 @@ import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.interactions.Actions;
 
 @Slf4j
 public class WebUser implements DriveSupport {
@@ -109,6 +110,13 @@ public class WebUser implements DriveSupport {
 	public void pause() {
 		Timer.waitFor(executionDelay);
 	}
+
+    /* (non-Javadoc)
+     * @see net.mloehr.mango.selenium.DriveSupport#getActions()
+     */
+    public Actions getActions() {
+        return new Actions(driver);
+    }
 
     private void waitForThis(String xpath) {
 	    timer.reset();
