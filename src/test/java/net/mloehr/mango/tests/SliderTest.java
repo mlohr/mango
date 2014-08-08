@@ -28,7 +28,6 @@ public class SliderTest extends BaseTest {
         webUser = new WebUser(URL);
         
         on(slider()).slide(100, 800);
-        Timer.waitFor(4000);
     }
     
     public static Class<SliderActions> slider() {

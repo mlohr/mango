@@ -21,19 +21,22 @@ public abstract class GetDataTemplate {
 
     public void executeGetData(DriveSupport driver, Task task) throws Exception {
         List<WebElement> elements = null;
-        
-		boolean notReady= true;
-		do {
+    	val timer = new Timer(Timer.TIMEOUT_IN_SECONDS);
+
+	    timer.reset();
+	    while (timer.isNotExpired()) {
 			try {
 				elements = driver.forThese(task.getXpath());
 				waitForElement(elements, task);
-				notReady = false;
+				break;
 			} catch (StaleElementReferenceException e) {
 				logger.warn("Retrying because of stale element {}",task.getXpath());
 				Timer.waitFor(Timer.MILLISECONDS_BETWEEN_ELEMENT_CHECK);
 			}    		
-		} while (notReady);
-
+	    }
+	    if (timer.isExpired()) {
+	    	logger.warn("Timer expired for xpath {}", task.getXpath());
+	    }
 		if (task.getMapper() == null) {
 			appendElementsText(task, elements);
 		} else {

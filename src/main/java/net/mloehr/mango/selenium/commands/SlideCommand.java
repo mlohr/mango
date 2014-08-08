@@ -8,14 +8,12 @@
  */
 package net.mloehr.mango.selenium.commands;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
-
 import lombok.val;
 import net.mloehr.mango.action.Task;
 import net.mloehr.mango.selenium.DriveSupport;
+
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 
 /**
  * @author Matthias Britten
