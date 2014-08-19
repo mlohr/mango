@@ -9,12 +9,13 @@ public interface DriveSupport {
 
     public abstract WebElement forThis(String xpath) throws Exception;
 
-	List<WebElement> forThese(String xpath) throws Exception;
+	List<WebElement> forThese(String xpath, boolean wait) throws Exception;
 
 	public abstract Object execute(String script, String xpath) throws Exception;
 
 	public abstract void pause();
 
     public abstract Actions getActions();
+
 
 }

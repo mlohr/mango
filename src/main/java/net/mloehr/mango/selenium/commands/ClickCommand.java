@@ -9,7 +9,7 @@ public class ClickCommand implements Command {
 
     @Override
     public void execute(DriveSupport driver, Task task) throws Exception {
-    	val elements = driver.forThese(task.getXpath());
+    	val elements = driver.forThese(task.getXpath(), true);
 		int index = 0;	
 		if(task.getText() != null && task.getText() != "") {
 			index = Integer.valueOf(task.getText()).intValue();			

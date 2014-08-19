@@ -26,7 +26,7 @@ public abstract class GetDataTemplate {
 	    timer.reset();
 	    while (timer.isNotExpired()) {
 			try {
-				elements = driver.forThese(task.getXpath());
+				elements = driver.forThese(task.getXpath(), true);
 				waitForElement(elements, task);
 				break;
 			} catch (StaleElementReferenceException e) {

@@ -18,7 +18,7 @@ public class VisibilityCommand implements Command {
         List<WebElement> elements;        
         StringBuilder result = (StringBuilder) task.getData();
         try {
-			elements = driver.forThese(task.getXpath());
+			elements = driver.forThese(task.getXpath(), false);
 		} catch (XPathNotFoundException e) {
 			result.append("false");
 			return;

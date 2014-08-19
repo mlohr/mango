@@ -8,7 +8,7 @@ public class CountCommand implements Command {
 
 	@Override
 	public void execute(DriveSupport driver, Task task) throws Exception {
-    	val elements = driver.forThese(task.getXpath());
+    	val elements = driver.forThese(task.getXpath(), true);
 		if (task.getResult() != null) {
 			task.setResultValue(String.valueOf(elements.size()));			
 		}

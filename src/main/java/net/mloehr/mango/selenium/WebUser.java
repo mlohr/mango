@@ -101,9 +101,15 @@ public class WebUser implements DriveSupport {
         throw new XPathNotFoundException(xpath);
     }
 
-	@Override
 	public List<WebElement> forThese(String xpath) throws Exception {
-	    waitForThis(xpath);
+		return forThese(xpath, true);
+	}
+	
+	@Override
+	public List<WebElement> forThese(String xpath, boolean wait) throws Exception {
+		if (wait) {
+			waitForThis(xpath);			
+		}
 	    if (currentPageHas(xpath)) {
 	    	val elements = driver.findElements(By.xpath(xpath));
         	executeJavaScript(elements);
