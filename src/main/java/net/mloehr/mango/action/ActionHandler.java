@@ -25,24 +25,24 @@ public class ActionHandler implements MethodHandler {
     private final HashMap<String, Command> availableCommands;
 
     public ActionHandler(DriveSupport driver) {
-        this.driver = driver;
-        availableCommands = new HashMap<>();
-        availableCommands.put("check", new CheckCommand());
-        availableCommands.put("click", new ClickCommand());
-        availableCommands.put("count", new CountCommand());
-        availableCommands.put("eval", new ExecuteCommand());
-        availableCommands.put("execute", new ExecuteCommand());
-        availableCommands.put("executeOnElement", new ExecuteCommand());
-        availableCommands.put("getAttribute", new AttributeCommand());
-        availableCommands.put("getText", new TextCommand());
-        availableCommands.put("isChecked", new IsCheckedCommand());
-        availableCommands.put("mapText", new TextCommand());
-        availableCommands.put("select", new SelectCommand());
-        availableCommands.put("testVisibility", new VisibilityCommand());
-        availableCommands.put("type", new TypeCommand());
-        availableCommands.put("uncheck", new CheckCommand());
-        availableCommands.put("slide", new SlideCommand());
-    }
+	    this.driver = driver;
+	    availableCommands = new HashMap<String, Command>();
+	    availableCommands.put("check", new CheckCommand());
+	    availableCommands.put("click", new ClickCommand());
+	    availableCommands.put("count", new CountCommand());
+	    availableCommands.put("eval", new ExecuteCommand());
+	    availableCommands.put("execute", new ExecuteCommand());
+	    availableCommands.put("executeOnElement", new ExecuteCommand());
+	    availableCommands.put("getAttribute", new AttributeCommand());
+	    availableCommands.put("getText", new TextCommand());
+	    availableCommands.put("isChecked", new IsCheckedCommand());
+	    availableCommands.put("mapText", new TextCommand());
+	    availableCommands.put("select", new SelectCommand());
+	    availableCommands.put("testVisibility", new VisibilityCommand());
+	    availableCommands.put("type", new TypeCommand());
+	    availableCommands.put("uncheck", new CheckCommand());
+	    availableCommands.put("slide", new SlideCommand());
+	}
 
     @Override
     public Object invoke(Object proxy, Method proxyMethod, Method pageMethod, Object[] args) throws Throwable {
