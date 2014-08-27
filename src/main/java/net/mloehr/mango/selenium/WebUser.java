@@ -104,18 +104,19 @@ public class WebUser implements DriveSupport {
 	public List<WebElement> forThese(String xpath) throws Exception {
 		return forThese(xpath, true);
 	}
-	
+
 	@Override
-	public List<WebElement> forThese(String xpath, boolean wait) throws Exception {
+	public List<WebElement> forThese(String xpath, boolean wait)
+			throws Exception {
 		if (wait) {
 			waitForThis(xpath);			
 		}
-	    if (currentPageHas(xpath)) {
-	    	val elements = driver.findElements(By.xpath(xpath));
-        	executeJavaScript(elements);
+		if (currentPageHas(xpath)) {
+			val elements = driver.findElements(By.xpath(xpath));
+			executeJavaScript(elements);
 			return elements;
-	    }
-	    throw new XPathNotFoundException(xpath);
+		}
+		throw new XPathNotFoundException(xpath);
 	}
 
 	public void pause() {
@@ -212,7 +213,7 @@ public class WebUser implements DriveSupport {
 			}
 		}
 	}
-
+	
 	private boolean currentPageHas(String xpath) {
         try {
             driver.findElement(By.xpath(xpath));

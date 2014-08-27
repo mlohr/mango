@@ -9,8 +9,8 @@ import net.mloehr.mango.model.Results;
 
 public class GoogleSearchActions {
 
-    private static final String SEARCH_INPUT = "//tbody//input[1]";
-    private static final String SEARCH_BUTTON = "//button[@name='btnK']";    
+    private static final String SEARCH_INPUT = ".//*[@id='sb_ifc0']//input[1]"; //tbody//input[1]";
+    private static final String SEARCH_BUTTON = ".//*[@id='gbqfba']"; //button[@name='btnK']";    
     private static final String SEARCHLOOP_BUTTON = "//button[@name='btnG']";    
 	private static final String SEARCH_BUTTON_DIV = ".//*[@id='gbqfbw']";
 
