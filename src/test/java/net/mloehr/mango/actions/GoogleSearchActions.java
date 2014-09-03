@@ -19,6 +19,8 @@ public class GoogleSearchActions {
 
     public Action search(String text) {
         return Action.withTasks()
+                .type(SEARCH_INPUT, "to-be-cleared")
+                .clear(SEARCH_INPUT)
                 .type(SEARCH_INPUT, text)
                 .click(SEARCHLOOP_BUTTON);
     }

@@ -17,7 +17,7 @@ public class CheckBoxTest extends BaseTest {
 	private final static String URL = "http://www.utexas.edu/learn/forms/checkboxes.html";
 
 	@Test
-	public void testCheck() {
+	public void testCheck() throws Exception {
 		webUser = new WebUser(URL);
 		Result result = new Result();
 		on(uTexasCb()).checkValue(UtexasCbActions.GRAPHIC_CHECKBOX, result);
@@ -31,7 +31,7 @@ public class CheckBoxTest extends BaseTest {
 	}
 
 	@Test
-	public void testClickingXPathSelectingMultipleElements() {
+	public void testClickingXPathSelectingMultipleElements() throws Exception {
 		webUser = new WebUser(URL);
 		Result result = new Result();
 		on(uTexasCb()).Uncheck(UtexasCbActions.FIRST_CHECKBOX);

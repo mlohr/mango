@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.mloehr.mango.selenium.DriveSupport;
 import net.mloehr.mango.selenium.commands.AttributeCommand;
 import net.mloehr.mango.selenium.commands.CheckCommand;
+import net.mloehr.mango.selenium.commands.ClearCommand;
 import net.mloehr.mango.selenium.commands.ClickCommand;
 import net.mloehr.mango.selenium.commands.Command;
 import net.mloehr.mango.selenium.commands.CountCommand;
@@ -28,6 +29,7 @@ public class ActionHandler implements MethodHandler {
 	    this.driver = driver;
 	    availableCommands = new HashMap<String, Command>();
 	    availableCommands.put("check", new CheckCommand());
+	    availableCommands.put("clear", new ClearCommand());
 	    availableCommands.put("click", new ClickCommand());
 	    availableCommands.put("count", new CountCommand());
 	    availableCommands.put("eval", new ExecuteCommand());

@@ -46,6 +46,18 @@ public class Action {
     }
 
     /**
+     * clears an input identified by 'xpath'
+     */
+    public Action clear(String xpath) {
+        tasks.add(Task.builder()
+                .id(getTaskName())
+                .action(name)
+                .xpath(xpath)
+                .build());
+        return this;
+    }
+
+    /**
      * unchecks checkbox identified by 'xpath' if checked
      */
     public Action uncheck(String xpath) {

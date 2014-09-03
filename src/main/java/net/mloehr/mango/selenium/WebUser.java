@@ -2,6 +2,7 @@ package net.mloehr.mango.selenium;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
@@ -12,16 +13,22 @@ import lombok.extern.slf4j.Slf4j;
 import net.mloehr.mango.Timer;
 import net.mloehr.mango.XPathNotFoundException;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.Augmenter;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 @Slf4j
 public class WebUser implements DriveSupport {
@@ -42,21 +49,27 @@ public class WebUser implements DriveSupport {
 	private int executionDelay = 0;
 	private boolean showTracer = false;
 	
-    public WebUser(String url) {
+    public WebUser(String url) throws Exception {
     	this(url, "");
     }
     
-    public WebUser(String url, String options) {
+    public WebUser(String url, String options) throws Exception {
     	timer = new Timer(Timer.TIMEOUT_IN_SECONDS);
     	Properties preferences = new Properties();
     	parseOptions(preferences, options);
     	
-   	    driver = new FirefoxDriver(useExtensionsAndAcceptUntrustedCertificates(preferences));
+    	driver = new FirefoxDriver(useExtensionsAndAcceptUntrustedCertificates(preferences));	    	
         driver.manage().deleteAllCookies();
         driver.get(url);
         handleMangoProperties(preferences, url);
     }
 
+    public void takeScreenShot(String file) throws Exception {
+    	val augDriver = new Augmenter().augment(driver); 
+    	File screenShot = ((FirefoxDriver) augDriver).getScreenshotAs(OutputType.FILE);	
+    	FileUtils.copyFile(screenShot, new File(file));
+    }
+    
 	public String getCurrentUrl() {
         return driver.getCurrentUrl();
     }
