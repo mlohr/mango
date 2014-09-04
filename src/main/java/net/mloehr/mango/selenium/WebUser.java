@@ -20,6 +20,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -77,7 +78,7 @@ public class WebUser implements DriveSupport {
     
     public void takeScreenShot(String file) throws Exception {
     	val augDriver = new Augmenter().augment(driver); 
-    	File screenShot = ((FirefoxDriver) augDriver).getScreenshotAs(OutputType.FILE);	
+    	File screenShot = ((TakesScreenshot) augDriver).getScreenshotAs(OutputType.FILE);	
     	FileUtils.copyFile(screenShot, new File(file));
     }
 
