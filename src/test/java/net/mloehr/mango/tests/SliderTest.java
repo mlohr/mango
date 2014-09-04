@@ -24,7 +24,7 @@ public class SliderTest extends BaseTest {
     private final static String URL = "http://www.elated.com/res/File/articles/development/javascript/jquery/drag-and-drop-with-jquery-your-essential-guide/draggable.html";
     
     @Test
-    public void testCheck() {
+    public void testCheck() throws Exception {
         webUser = new WebUser(URL);
         
         on(slider()).slide(100, 800);
