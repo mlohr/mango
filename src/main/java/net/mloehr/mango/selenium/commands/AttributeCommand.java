@@ -1,19 +1,19 @@
 package net.mloehr.mango.selenium.commands;
 
-import org.openqa.selenium.WebElement;
-
 import net.mloehr.mango.action.Task;
 import net.mloehr.mango.selenium.DriveSupport;
+
+import org.openqa.selenium.WebElement;
 
 public class AttributeCommand extends GetDataTemplate implements Command {
 
     @Override
     public void execute(DriveSupport driver, Task task) throws Exception {
-    	executeGetData(driver, task);
+        executeGetData(driver, task);
     }
-    
-	public String getData(WebElement elements, Task task) {
-		return elements.getAttribute(task.getText());
-	}
+
+    public String getData(WebElement elements, Task task) {
+        return elements.getAttribute(task.getText());
+    }
 
 }

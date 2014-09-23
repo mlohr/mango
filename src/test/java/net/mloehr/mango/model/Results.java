@@ -8,6 +8,6 @@ import lombok.Data;
 @Data
 public class Results {
 
-    private List<String>  items = new ArrayList<String>();
+    private List<String> items = new ArrayList<String>();
 
 }

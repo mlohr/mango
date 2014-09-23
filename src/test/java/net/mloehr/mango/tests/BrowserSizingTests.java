@@ -13,34 +13,34 @@ public class BrowserSizingTests extends BaseTest {
 
     private final static String GOOGLE = "https://www.google.de/";
 
-	@Test
-	public void testHeight() throws Exception {
+    @Test
+    public void testHeight() throws Exception {
         webUser = new WebUser(GOOGLE, "mango.browser-height=300;");
-		final int browserHeight = on(googleSearch()).getBrowserHeight();
-		assertThat(browserHeight, is(300));
-	}
+        final int browserHeight = on(googleSearch()).getBrowserHeight();
+        assertThat(browserHeight, is(300));
+    }
 
-	@Test
-	public void testMinHeight() throws Exception {
+    @Test
+    public void testMinHeight() throws Exception {
         webUser = new WebUser(GOOGLE, "mango.browser-min-height=100;");
-		final int browserHeight = on(googleSearch()).getBrowserHeight();
-		assertThat(browserHeight, greaterThanOrEqualTo(100));
-	}
+        final int browserHeight = on(googleSearch()).getBrowserHeight();
+        assertThat(browserHeight, greaterThanOrEqualTo(100));
+    }
 
-	@Test
-	public void testWidth() throws Exception {
+    @Test
+    public void testWidth() throws Exception {
         webUser = new WebUser(GOOGLE, "mango.browser-width=400;");
-		final int browserWidth = on(googleSearch()).getBrowserWidth();
-		assertThat(browserWidth, is(400));
-	}
+        final int browserWidth = on(googleSearch()).getBrowserWidth();
+        assertThat(browserWidth, is(400));
+    }
 
-	@Test
-	public void testMinWidth() throws Exception {
+    @Test
+    public void testMinWidth() throws Exception {
         webUser = new WebUser(GOOGLE, "mango.browser-min_width=200;");
-		final int browserWidth = on(googleSearch()).getBrowserWidth();
-		assertThat(browserWidth, greaterThanOrEqualTo(200));
-	}
-    
+        final int browserWidth = on(googleSearch()).getBrowserWidth();
+        assertThat(browserWidth, greaterThanOrEqualTo(200));
+    }
+
     public static Class<GoogleSearchActions> googleSearch() {
         return GoogleSearchActions.class;
     }

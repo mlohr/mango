@@ -6,11 +6,11 @@ import net.mloehr.mango.selenium.DriveSupport;
 
 public class ClearCommand implements Command {
 
-	@Override
-	public void execute(DriveSupport driver, Task task) throws Exception {
-        for(val element: driver.forThese(task.getXpath(), true)) {
-        	element.clear();
+    @Override
+    public void execute(DriveSupport driver, Task task) throws Exception {
+        for (val element : driver.forThese(task.getXpath(), true)) {
+            element.clear();
         }
-	}
+    }
 
 }

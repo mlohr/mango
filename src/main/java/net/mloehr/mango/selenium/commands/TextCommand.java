@@ -9,11 +9,11 @@ public class TextCommand extends GetDataTemplate implements Command {
 
     @Override
     public void execute(DriveSupport driver, Task task) throws Exception {
-    	executeGetData(driver, task);
+        executeGetData(driver, task);
     }
-    
-	public String getData(WebElement elements, Task task) {
-		return elements.getText();
-	}
+
+    public String getData(WebElement elements, Task task) {
+        return elements.getText();
+    }
 
 }

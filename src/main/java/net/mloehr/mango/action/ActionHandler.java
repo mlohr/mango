@@ -26,44 +26,45 @@ public class ActionHandler implements MethodHandler {
     private final HashMap<String, Command> availableCommands;
 
     public ActionHandler(DriveSupport driver) {
-	    this.driver = driver;
-	    availableCommands = new HashMap<String, Command>();
-	    availableCommands.put("check", new CheckCommand());
-	    availableCommands.put("clear", new ClearCommand());
-	    availableCommands.put("click", new ClickCommand());
-	    availableCommands.put("count", new CountCommand());
-	    availableCommands.put("eval", new ExecuteCommand());
-	    availableCommands.put("execute", new ExecuteCommand());
-	    availableCommands.put("executeOnElement", new ExecuteCommand());
-	    availableCommands.put("getAttribute", new AttributeCommand());
-	    availableCommands.put("getText", new TextCommand());
-	    availableCommands.put("isChecked", new IsCheckedCommand());
-	    availableCommands.put("mapText", new TextCommand());
-	    availableCommands.put("select", new SelectCommand());
-	    availableCommands.put("testVisibility", new VisibilityCommand());
-	    availableCommands.put("type", new TypeCommand());
-	    availableCommands.put("uncheck", new CheckCommand());
-	    availableCommands.put("slide", new SlideCommand());
-	}
+        this.driver = driver;
+        availableCommands = new HashMap<String, Command>();
+        availableCommands.put("check", new CheckCommand());
+        availableCommands.put("clear", new ClearCommand());
+        availableCommands.put("click", new ClickCommand());
+        availableCommands.put("count", new CountCommand());
+        availableCommands.put("eval", new ExecuteCommand());
+        availableCommands.put("execute", new ExecuteCommand());
+        availableCommands.put("executeOnElement", new ExecuteCommand());
+        availableCommands.put("getAttribute", new AttributeCommand());
+        availableCommands.put("getText", new TextCommand());
+        availableCommands.put("isChecked", new IsCheckedCommand());
+        availableCommands.put("mapText", new TextCommand());
+        availableCommands.put("select", new SelectCommand());
+        availableCommands.put("testVisibility", new VisibilityCommand());
+        availableCommands.put("type", new TypeCommand());
+        availableCommands.put("uncheck", new CheckCommand());
+        availableCommands.put("slide", new SlideCommand());
+    }
 
     @Override
-    public Object invoke(Object proxy, Method proxyMethod, Method pageMethod, Object[] args) throws Throwable {
-    	Class<?> returnType = (pageMethod.getReturnType());
-    	if( returnType.equals(Action.class)) {
-    		Action action = (Action) pageMethod.invoke(proxy, args);
-    		for (Task task : action.getTasks()) {
-    			execute(task);
-    		}
-    		return action;    		
-    	} else {
-    		Object result = null;
-    		try {
-				result = pageMethod.invoke(proxy, args);
-			} catch (Exception e) {
-				throw e.getCause();
-			}
-    		return result;
-    	}
+    public Object invoke(Object proxy, Method proxyMethod, Method pageMethod,
+            Object[] args) throws Throwable {
+        Class<?> returnType = (pageMethod.getReturnType());
+        if (returnType.equals(Action.class)) {
+            Action action = (Action) pageMethod.invoke(proxy, args);
+            for (Task task : action.getTasks()) {
+                execute(task);
+            }
+            return action;
+        } else {
+            Object result = null;
+            try {
+                result = pageMethod.invoke(proxy, args);
+            } catch (Exception e) {
+                throw e.getCause();
+            }
+            return result;
+        }
     }
 
     private void execute(Task task) throws Exception {
@@ -73,7 +74,8 @@ public class ActionHandler implements MethodHandler {
             command.execute(driver, task);
             driver.pause();
         } else {
-            log.error("{}.{} NOT implemented! ({})", task.getAction(), task.getId(), task);
+            log.error("{}.{} NOT implemented! ({})", task.getAction(),
+                    task.getId(), task);
             throw new RuntimeException("Command not implemented!");
         }
     }

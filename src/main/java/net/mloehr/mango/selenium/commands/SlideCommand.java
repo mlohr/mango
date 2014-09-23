@@ -23,22 +23,22 @@ public class SlideCommand implements Command {
 
     @Override
     public void execute(DriveSupport driver, Task task) throws Exception {
-        
+
         val element = driver.forThis(task.getXpath());
         int xCoordinate = 0, yCoordinate = 0;
-        
-        if(task.getText() != null && task.getText() != "") {
-            
-            String[] coordinate =  task.getText().split(",");
+
+        if (task.getText() != null && task.getText() != "") {
+
+            String[] coordinate = task.getText().split(",");
             xCoordinate = Integer.valueOf(coordinate[0]).intValue();
             yCoordinate = Integer.valueOf(coordinate[1]).intValue();
         }
-        
-        
+
         Actions slide = driver.getActions();
-        Action action = slide.dragAndDropBy(element, xCoordinate, yCoordinate).build();
+        Action action = slide.dragAndDropBy(element, xCoordinate, yCoordinate)
+                .build();
         action.perform();
-        
+
     }
 
 }

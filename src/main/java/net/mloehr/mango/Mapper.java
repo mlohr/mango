@@ -31,8 +31,7 @@ public class Mapper {
 
     public void map(String text) {
         try {
-            val field = target.getClass()
-                .getDeclaredField(fieldName);
+            val field = target.getClass().getDeclaredField(fieldName);
             field.setAccessible(true);
             if (isList(field)) {
                 field.set(target, filteredLines(text));
@@ -45,8 +44,7 @@ public class Mapper {
     }
 
     private boolean isList(final java.lang.reflect.Field field) {
-        return "List".equals(field.getType()
-            .getSimpleName());
+        return "List".equals(field.getType().getSimpleName());
     }
 
     private List<String> filteredLines(String text) {

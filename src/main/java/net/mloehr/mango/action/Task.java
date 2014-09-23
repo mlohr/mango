@@ -1,9 +1,9 @@
 package net.mloehr.mango.action;
 
-import net.mloehr.mango.Mapper;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.experimental.Builder;
+import net.mloehr.mango.Mapper;
 
 @Data
 @Builder
@@ -20,13 +20,13 @@ public class Task {
     private String text;
 
     private Object data;
-    
+
     private Mapper mapper;
-    
+
     private Result result = new Result();
 
-	public void setResultValue(Object result) {
-		this.result.setValue(result);
-	}
+    public void setResultValue(Object result) {
+        this.result.setValue(result);
+    }
 
 }

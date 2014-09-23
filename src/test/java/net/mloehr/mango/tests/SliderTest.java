@@ -9,7 +9,6 @@
 package net.mloehr.mango.tests;
 
 import net.mloehr.mango.BaseTest;
-import net.mloehr.mango.Timer;
 import net.mloehr.mango.actions.SliderActions;
 import net.mloehr.mango.selenium.WebUser;
 
@@ -22,16 +21,16 @@ import org.junit.Test;
 public class SliderTest extends BaseTest {
 
     private final static String URL = "http://www.elated.com/res/File/articles/development/javascript/jquery/drag-and-drop-with-jquery-your-essential-guide/draggable.html";
-    
+
     @Test
     public void testCheck() throws Exception {
         webUser = new WebUser(URL);
-        
-        on(slider()).slide(100, 800);
+
+        on(slider()).slide(100, 300);
     }
-    
+
     public static Class<SliderActions> slider() {
         return SliderActions.class;
     }
-    
+
 }
