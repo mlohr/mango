@@ -15,7 +15,7 @@ public class GoogleSearchActions {
     private static final String SEARCHLOOP_BUTTON = "//button[@name='btnG']";
     private static final String SEARCH_BUTTON_DIV = ".//*[@id='gbqfbw']";
 
-    private static final String RESULT_HEADLINES = ".//*[@id='res']//h3";
+    private static final String RESULT_HEADLINES = ".//*[@id='res']//div/h3";
     private static final String BILDER_LINK = ".//*[@id='hdtb_s']/div/div[2]/a";
 
     public Action search(String text) {
