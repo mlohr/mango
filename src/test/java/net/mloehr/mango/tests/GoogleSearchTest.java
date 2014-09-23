@@ -34,7 +34,7 @@ public class GoogleSearchTest extends BaseTest {
         assertThat(results.getItems(), everyItem(containsMatch("(?i)hello")));
     }
 
-//    @Test
+    @Test
     public void shouldGetAttribute() throws Exception {
         val classText = new StringBuilder();
         webUser = new WebUser(GOOGLE);
@@ -42,7 +42,7 @@ public class GoogleSearchTest extends BaseTest {
         assertThat(classText.toString(), is("gbqfba"));
     }
 
-//    @Test
+    @Test
     public void shouldGetText() throws Exception {
         val text = new StringBuilder();
         webUser = new WebUser(GOOGLE + "?hl=de");
@@ -51,7 +51,7 @@ public class GoogleSearchTest extends BaseTest {
         assertThat(text.toString(), is("Bilder"));
     }
 
-//    @Test
+    @Test
     public void shouldHideGoogleLogoAndTestJavaScriptExecution()
             throws Exception {
         webUser = new WebUser(GOOGLE);
@@ -65,7 +65,7 @@ public class GoogleSearchTest extends BaseTest {
         }
     }
 
-//    @Test
+    @Test
     public void shouldNotFindNonExistingElement() throws Exception {
         webUser = new WebUser(GOOGLE);
         try {
