@@ -49,8 +49,8 @@ public class WebUser implements DriveSupport {
         this(null, url, options);
     }
 
-    public WebUser(WebDriver driver, String options) throws Exception {
-        this(driver, "", options);
+    public WebUser(WebDriver aDriver, String options) throws Exception {
+        this(aDriver, "", options);
     }
 
     public WebUser(WebDriver aDriver, String url, String options)
@@ -58,15 +58,15 @@ public class WebUser implements DriveSupport {
         timer = new Timer(Timer.TIMEOUT_IN_SECONDS);
         Properties preferences = new Properties();
         parseOptions(preferences, options);
-        if (driver == null) {
+        if (aDriver == null) {
             driver = new FirefoxDriver(
                     useExtensionsAndAcceptUntrustedCertificates(preferences));
             driver.manage().deleteAllCookies();
-            if (!url.equals("")) {
-                driver.get(url);
-            }
         } else {
             driver = aDriver;
+        }
+        if (!url.equals("")) {
+            driver.get(url);
         }
         handleMangoProperties(preferences);
     }
