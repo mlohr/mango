@@ -67,7 +67,7 @@ public class GoogleSearchTest extends BaseTest {
 
     @Test
     public void shouldNotFindNonExistingElement() throws Exception {
-        webUser = new WebUser(GOOGLE);
+        webUser = new WebUser(GOOGLE, "mango.timeout=1;");
         try {
             on(googleSearch()).clickOn("./*[@id='thisIsNotExisting']");
             fail("Missed Exception, should not happen!");

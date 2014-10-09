@@ -32,6 +32,7 @@ public class WebUser implements DriveSupport {
     private static final String MANGO_BROWSER_MIN_WIDTH = "mango.browser-min-width";
     private static final String MANGO_EXECUTION_DELAY = "mango.execution-delay";
     private static final String MANGO_EXECUTION_TRACER = "mango.execution-tracer";
+    private static final String MANGO_TIMEOUT = "mango.timeout";
 
     private static final String tracerScript = "arguments[0].style='border: 3px dashed red';";
     private static final String scrollIntoViewScript = "arguments[0].scrollIntoView(true);";
@@ -40,6 +41,7 @@ public class WebUser implements DriveSupport {
     private Timer timer;
     private int executionDelay = 0;
     private boolean showTracer = false;
+	private int timeoutInSeconds = Timer.TIMEOUT_IN_SECONDS;
 
     public WebUser(String url) throws Exception {
         this(null, url, "");
@@ -55,7 +57,6 @@ public class WebUser implements DriveSupport {
 
     public WebUser(WebDriver aDriver, String url, String options)
             throws Exception {
-        timer = new Timer(Timer.TIMEOUT_IN_SECONDS);
         Properties preferences = new Properties();
         parseOptions(preferences, options);
         if (aDriver == null) {
@@ -69,6 +70,7 @@ public class WebUser implements DriveSupport {
             driver.get(url);
         }
         handleMangoProperties(preferences);
+        timer = new Timer(timeoutInSeconds);
     }
 
     public String getCurrentUrl() {
@@ -223,6 +225,10 @@ public class WebUser implements DriveSupport {
         if (preferences.containsKey(MANGO_EXECUTION_TRACER)) {
             showTracer = Boolean.valueOf(preferences
                     .getProperty(MANGO_EXECUTION_TRACER));
+        }
+        if (preferences.containsKey(MANGO_TIMEOUT)) {
+            timeoutInSeconds = Integer.valueOf(preferences
+                    .getProperty(MANGO_TIMEOUT));
         }
     }
 
