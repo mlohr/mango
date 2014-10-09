@@ -15,6 +15,7 @@ import net.mloehr.mango.selenium.commands.CountCommand;
 import net.mloehr.mango.selenium.commands.ExecuteCommand;
 import net.mloehr.mango.selenium.commands.IsCheckedCommand;
 import net.mloehr.mango.selenium.commands.SelectCommand;
+import net.mloehr.mango.selenium.commands.SelectedCommand;
 import net.mloehr.mango.selenium.commands.SlideCommand;
 import net.mloehr.mango.selenium.commands.TextCommand;
 import net.mloehr.mango.selenium.commands.TypeCommand;
@@ -36,6 +37,7 @@ public class ActionHandler implements MethodHandler {
         availableCommands.put("execute", new ExecuteCommand());
         availableCommands.put("executeOnElement", new ExecuteCommand());
         availableCommands.put("getAttribute", new AttributeCommand());
+        availableCommands.put("getSelected", new SelectedCommand());
         availableCommands.put("getText", new TextCommand());
         availableCommands.put("isChecked", new IsCheckedCommand());
         availableCommands.put("mapText", new TextCommand());

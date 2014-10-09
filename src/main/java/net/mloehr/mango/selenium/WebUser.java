@@ -12,10 +12,13 @@ import lombok.extern.slf4j.Slf4j;
 import net.mloehr.mango.Timer;
 import net.mloehr.mango.XPathNotFoundException;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -73,6 +76,16 @@ public class WebUser implements DriveSupport {
         timer = new Timer(timeoutInSeconds);
     }
 
+    /**
+     * Takes a screenshot from current browser content
+     * @param name filename with or without path
+     * @throws IOException
+     */
+    public void takeScreenShot(String name) throws IOException {
+		File shot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(shot, new File(name));
+	}
+    
     public String getCurrentUrl() {
         return driver.getCurrentUrl();
     }

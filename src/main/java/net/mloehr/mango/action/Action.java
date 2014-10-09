@@ -159,6 +159,15 @@ public class Action {
     }
 
     /**
+     * gets the selected option into 'data', of a select-element identified by 'xpath'
+     */
+    public Action getSelected(String xpath, Object data) {
+        tasks.add(Task.builder().id(getTaskName()).action(name).xpath(xpath)
+                .data(data).build());
+        return this;
+    }
+
+    /**
      * gets the text into 'data', of web-element identified by 'xpath'
      */
     public Action getText(String xpath, Object data) {

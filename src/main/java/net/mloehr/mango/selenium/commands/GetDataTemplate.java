@@ -3,18 +3,16 @@ package net.mloehr.mango.selenium.commands;
 import java.util.List;
 
 import lombok.val;
+import lombok.extern.slf4j.Slf4j;
 import net.mloehr.mango.Timer;
 import net.mloehr.mango.action.Task;
 import net.mloehr.mango.selenium.DriveSupport;
 
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
-import org.slf4j.LoggerFactory;
 
+@Slf4j
 public abstract class GetDataTemplate {
-
-    private static final org.slf4j.Logger logger = LoggerFactory
-            .getLogger(GetDataTemplate.class);
 
     public GetDataTemplate() {
         super();
@@ -30,13 +28,13 @@ public abstract class GetDataTemplate {
                 elements = driver.forThese(task.getXpath(), true);
                 break;
             } catch (StaleElementReferenceException e) {
-                logger.warn("Retrying because of stale element {}",
+                log.warn("Retrying because of stale element {}",
                         task.getXpath());
                 Timer.waitFor(Timer.MILLISECONDS_BETWEEN_ELEMENT_CHECK);
             }
         }
         if (timer.isExpired()) {
-            logger.warn("Timer expired for xpath {}", task.getXpath());
+            log.warn("Timer expired for xpath {}", task.getXpath());
         }
         if (task.getMapper() == null) {
             appendElementsText(task, elements);
