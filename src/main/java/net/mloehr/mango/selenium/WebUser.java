@@ -18,6 +18,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
@@ -38,7 +39,7 @@ public class WebUser implements DriveSupport {
     private static final String MANGO_TIMEOUT = "mango.timeout";
 
     private static final String tracerScript = "arguments[0].style='border: 3px dashed red';";
-    private static final String scrollIntoViewScript = "arguments[0].scrollIntoView(true);";
+    private static final String scrollIntoViewScript = "arguments[0].scrollIntoView(false);";
 
     private WebDriver driver;
     private Timer timer;
@@ -66,6 +67,7 @@ public class WebUser implements DriveSupport {
             driver = new FirefoxDriver(
                     useExtensionsAndAcceptUntrustedCertificates(preferences));
             driver.manage().deleteAllCookies();
+            driver.manage().window().setPosition(new Point(0,0));
         } else {
             driver = aDriver;
         }
