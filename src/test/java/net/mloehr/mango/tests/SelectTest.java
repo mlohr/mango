@@ -16,7 +16,7 @@ public class SelectTest extends BaseTest {
 	@Test
 	public void testSelection() throws Exception {
 		val selected = new StringBuilder();
-		webUser = new WebUser(URL);
+		webUser = new WebUser(URL, "mango.extensions=false");
 		on(uTexasMenus()).getSelected(UtexasMenuActions.DEPARTMENT1, selected);
 		on(uTexasMenus()).select(UtexasMenuActions.DEPARTMENT1, "Engineering");
 		on(uTexasMenus()).getSelected(UtexasMenuActions.DEPARTMENT1, selected);
