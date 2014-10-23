@@ -2,8 +2,10 @@ package net.mloehr.mango.selenium;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -107,6 +109,10 @@ public class WebUser implements DriveSupport {
 
 	public void refreshPage() {
 		driver.navigate().refresh();
+		try { // skipping optional popup
+			driver.switchTo().alert().accept();
+		} catch (Exception e) {
+		}
 	}
 
 	public void quit() {
@@ -204,60 +210,60 @@ public class WebUser implements DriveSupport {
 	}
 
 	private void postWebDriverActions(Properties preferences) {
-		Dimension browserSize = driver.manage().window().getSize();
-		int browserWidth = browserSize.width;
-		int browserHeight = browserSize.height;
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		int screenWidth = ((Long) js.executeScript("return screen.width"))
-				.intValue();
-		int screenHeight = ((Long) js.executeScript("return screen.height"))
-				.intValue();
-
-		if (preferences.containsKey(MANGO_BROWSER_HEIGHT)) {
-			int requestedHeigth = Integer.valueOf(
-					preferences.getProperty(MANGO_BROWSER_HEIGHT)).intValue();
-			if (requestedHeigth <= screenHeight) {
-				browserHeight = requestedHeigth;
-			}
-		}
-		if (preferences.containsKey(MANGO_BROWSER_MIN_HEIGHT)) {
-			int requestedHeigth = Integer.valueOf(
-					preferences.getProperty(MANGO_BROWSER_MIN_HEIGHT))
-					.intValue();
-			if (requestedHeigth > browserHeight) {
-				browserHeight = requestedHeigth;
-			}
-		}
-		if (preferences.containsKey(MANGO_BROWSER_WIDTH)) {
-			int requestedWidth = Integer.valueOf(
-					preferences.getProperty(MANGO_BROWSER_WIDTH)).intValue();
-			if (requestedWidth <= screenWidth) {
-				browserWidth = requestedWidth;
-			}
-		}
-		if (preferences.containsKey(MANGO_BROWSER_MIN_WIDTH)) {
-			int requestedWidth = Integer.valueOf(
-					preferences.getProperty(MANGO_BROWSER_MIN_WIDTH))
-					.intValue();
-			if (requestedWidth > browserWidth) {
-				browserWidth = requestedWidth;
-			}
-		}
-		val dim = new Dimension(browserWidth, browserHeight);
-		driver.manage().window().setSize(dim);
-
-		if (preferences.containsKey(MANGO_EXECUTION_DELAY)) {
-			executionDelay = Integer.valueOf(
-					preferences.getProperty(MANGO_EXECUTION_DELAY)).intValue();
-		}
-		if (preferences.containsKey(MANGO_EXECUTION_TRACER)) {
-			showTracer = Boolean.valueOf(preferences
-					.getProperty(MANGO_EXECUTION_TRACER));
-		}
-		if (preferences.containsKey(MANGO_TIMEOUT)) {
-			timeoutInSeconds = Integer.valueOf(preferences
-					.getProperty(MANGO_TIMEOUT));
-		}
+		// Dimension browserSize = driver.manage().window().getSize();
+		// int browserWidth = browserSize.width;
+		// int browserHeight = browserSize.height;
+		// JavascriptExecutor js = (JavascriptExecutor) driver;
+		// int screenWidth = ((Long) js.executeScript("return screen.width"))
+		// .intValue();
+		// int screenHeight = ((Long) js.executeScript("return screen.height"))
+		// .intValue();
+		//
+		// if (preferences.containsKey(MANGO_BROWSER_HEIGHT)) {
+		// int requestedHeigth = Integer.valueOf(
+		// preferences.getProperty(MANGO_BROWSER_HEIGHT)).intValue();
+		// if (requestedHeigth <= screenHeight) {
+		// browserHeight = requestedHeigth;
+		// }
+		// }
+		// if (preferences.containsKey(MANGO_BROWSER_MIN_HEIGHT)) {
+		// int requestedHeigth = Integer.valueOf(
+		// preferences.getProperty(MANGO_BROWSER_MIN_HEIGHT))
+		// .intValue();
+		// if (requestedHeigth > browserHeight) {
+		// browserHeight = requestedHeigth;
+		// }
+		// }
+		// if (preferences.containsKey(MANGO_BROWSER_WIDTH)) {
+		// int requestedWidth = Integer.valueOf(
+		// preferences.getProperty(MANGO_BROWSER_WIDTH)).intValue();
+		// if (requestedWidth <= screenWidth) {
+		// browserWidth = requestedWidth;
+		// }
+		// }
+		// if (preferences.containsKey(MANGO_BROWSER_MIN_WIDTH)) {
+		// int requestedWidth = Integer.valueOf(
+		// preferences.getProperty(MANGO_BROWSER_MIN_WIDTH))
+		// .intValue();
+		// if (requestedWidth > browserWidth) {
+		// browserWidth = requestedWidth;
+		// }
+		// }
+		// val dim = new Dimension(browserWidth, browserHeight);
+		// driver.manage().window().setSize(dim);
+		//
+		// if (preferences.containsKey(MANGO_EXECUTION_DELAY)) {
+		// executionDelay = Integer.valueOf(
+		// preferences.getProperty(MANGO_EXECUTION_DELAY)).intValue();
+		// }
+		// if (preferences.containsKey(MANGO_EXECUTION_TRACER)) {
+		// showTracer = Boolean.valueOf(preferences
+		// .getProperty(MANGO_EXECUTION_TRACER));
+		// }
+		// if (preferences.containsKey(MANGO_TIMEOUT)) {
+		// timeoutInSeconds = Integer.valueOf(preferences
+		// .getProperty(MANGO_TIMEOUT));
+		// }
 	}
 
 	private void parseOptions(Properties preferences, String options) {
