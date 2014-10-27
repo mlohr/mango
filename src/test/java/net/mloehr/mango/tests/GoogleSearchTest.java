@@ -31,6 +31,7 @@ public class GoogleSearchTest extends BaseTest {
         assertThat(displayed.toString(), is("false"));
 
         val results = on(googleSearch()).searchAndReturnResults("hello");
+        webUser.refreshPage();
         assertThat(results.getItems(), everyItem(containsMatch("(?i)hello")));
     }
 

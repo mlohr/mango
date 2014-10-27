@@ -2,10 +2,8 @@ package net.mloehr.mango.selenium;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,6 +26,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 @Slf4j
 public class WebUser implements DriveSupport {
@@ -69,11 +70,11 @@ public class WebUser implements DriveSupport {
 		preWebDriverActions(preferences);
 		if (aDriver == null) {
 			driver = new FirefoxDriver(useExtensionsAndAcceptUntrustedCertificates(preferences));
-			driver.manage().deleteAllCookies();
-			driver.manage().window().setPosition(new Point(0, 0));
 		} else {
 			driver = aDriver;
 		}
+		driver.manage().deleteAllCookies();
+		driver.manage().window().setPosition(new Point(0, 0));
 		if (!url.equals("")) {
 			driver.get(url);
 		}
@@ -111,6 +112,14 @@ public class WebUser implements DriveSupport {
 			driver.switchTo().alert().accept();
 		} catch (Exception e) {
 		}
+		ExpectedCondition<Boolean> pageLoad = new ExpectedCondition<Boolean>() {
+			public Boolean apply(WebDriver driver) {
+				return ((JavascriptExecutor) driver).executeScript("return document.readyState")
+						.equals("complete");
+			}
+		};
+		Wait<WebDriver> wait = new WebDriverWait(driver, 60);
+		wait.until(pageLoad);
 	}
 
 	public void quit() {
