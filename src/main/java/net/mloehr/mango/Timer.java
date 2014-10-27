@@ -5,7 +5,7 @@ import lombok.Getter;
 public class Timer {
 
     public static final int MILLISECONDS_BETWEEN_ELEMENT_CHECK = 200;
-    public static final int TIMEOUT_IN_SECONDS = 10;
+    public static final int TIMEOUT_IN_SECONDS = 60;
 
     private long expiryTime;
     @Getter

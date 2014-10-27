@@ -63,14 +63,12 @@ public class WebUser implements DriveSupport {
 		this(aDriver, "", options);
 	}
 
-	public WebUser(WebDriver aDriver, String url, String options)
-			throws Exception {
+	public WebUser(WebDriver aDriver, String url, String options) throws Exception {
 		Properties preferences = new Properties();
 		parseOptions(preferences, options);
 		preWebDriverActions(preferences);
 		if (aDriver == null) {
-			driver = new FirefoxDriver(
-					useExtensionsAndAcceptUntrustedCertificates(preferences));
+			driver = new FirefoxDriver(useExtensionsAndAcceptUntrustedCertificates(preferences));
 			driver.manage().deleteAllCookies();
 			driver.manage().window().setPosition(new Point(0, 0));
 		} else {
@@ -148,8 +146,7 @@ public class WebUser implements DriveSupport {
 	}
 
 	@Override
-	public List<WebElement> forThese(String xpath, boolean wait)
-			throws Exception {
+	public List<WebElement> forThese(String xpath, boolean wait) throws Exception {
 		if (wait) {
 			waitForThis(xpath);
 		}
@@ -183,8 +180,7 @@ public class WebUser implements DriveSupport {
 				Timer.waitFor(Timer.MILLISECONDS_BETWEEN_ELEMENT_CHECK);
 			}
 		}
-		log.warn("Time-out after {} seconds for xpath {}", timer.getTimeOut(),
-				xpath);
+		log.warn("Time-out after {} seconds for xpath {}", timer.getTimeOut(), xpath);
 	}
 
 	private void executeJavaScript(List<WebElement> elements) {
@@ -194,8 +190,7 @@ public class WebUser implements DriveSupport {
 	}
 
 	private void executeJavaScript(final org.openqa.selenium.WebElement element) {
-		((JavascriptExecutor) driver).executeScript(scrollIntoViewScript,
-				element);
+		((JavascriptExecutor) driver).executeScript(scrollIntoViewScript, element);
 		if (showTracer) {
 			((JavascriptExecutor) driver).executeScript(tracerScript, element);
 		}
@@ -203,67 +198,67 @@ public class WebUser implements DriveSupport {
 
 	private void preWebDriverActions(Properties preferences) {
 		if (preferences.containsKey(MANGO_ADD_EXTENSIONS)) {
-			addExtensions = Boolean.valueOf(preferences
-					.getProperty(MANGO_ADD_EXTENSIONS));
+			addExtensions = Boolean.valueOf(preferences.getProperty(MANGO_ADD_EXTENSIONS));
 		}
-
 	}
 
 	private void postWebDriverActions(Properties preferences) {
-		// Dimension browserSize = driver.manage().window().getSize();
-		// int browserWidth = browserSize.width;
-		// int browserHeight = browserSize.height;
-		// JavascriptExecutor js = (JavascriptExecutor) driver;
-		// int screenWidth = ((Long) js.executeScript("return screen.width"))
-		// .intValue();
-		// int screenHeight = ((Long) js.executeScript("return screen.height"))
-		// .intValue();
-		//
-		// if (preferences.containsKey(MANGO_BROWSER_HEIGHT)) {
-		// int requestedHeigth = Integer.valueOf(
-		// preferences.getProperty(MANGO_BROWSER_HEIGHT)).intValue();
-		// if (requestedHeigth <= screenHeight) {
-		// browserHeight = requestedHeigth;
-		// }
-		// }
-		// if (preferences.containsKey(MANGO_BROWSER_MIN_HEIGHT)) {
-		// int requestedHeigth = Integer.valueOf(
-		// preferences.getProperty(MANGO_BROWSER_MIN_HEIGHT))
-		// .intValue();
-		// if (requestedHeigth > browserHeight) {
-		// browserHeight = requestedHeigth;
-		// }
-		// }
-		// if (preferences.containsKey(MANGO_BROWSER_WIDTH)) {
-		// int requestedWidth = Integer.valueOf(
-		// preferences.getProperty(MANGO_BROWSER_WIDTH)).intValue();
-		// if (requestedWidth <= screenWidth) {
-		// browserWidth = requestedWidth;
-		// }
-		// }
-		// if (preferences.containsKey(MANGO_BROWSER_MIN_WIDTH)) {
-		// int requestedWidth = Integer.valueOf(
-		// preferences.getProperty(MANGO_BROWSER_MIN_WIDTH))
-		// .intValue();
-		// if (requestedWidth > browserWidth) {
-		// browserWidth = requestedWidth;
-		// }
-		// }
-		// val dim = new Dimension(browserWidth, browserHeight);
-		// driver.manage().window().setSize(dim);
-		//
-		// if (preferences.containsKey(MANGO_EXECUTION_DELAY)) {
-		// executionDelay = Integer.valueOf(
-		// preferences.getProperty(MANGO_EXECUTION_DELAY)).intValue();
-		// }
-		// if (preferences.containsKey(MANGO_EXECUTION_TRACER)) {
-		// showTracer = Boolean.valueOf(preferences
-		// .getProperty(MANGO_EXECUTION_TRACER));
-		// }
-		// if (preferences.containsKey(MANGO_TIMEOUT)) {
-		// timeoutInSeconds = Integer.valueOf(preferences
-		// .getProperty(MANGO_TIMEOUT));
-		// }
+		Dimension browserSize = null;
+
+		if (preferences.containsKey(MANGO_EXECUTION_DELAY)) {
+			executionDelay = Integer.valueOf(preferences.getProperty(MANGO_EXECUTION_DELAY))
+					.intValue();
+		}
+		if (preferences.containsKey(MANGO_EXECUTION_TRACER)) {
+			showTracer = Boolean.valueOf(preferences.getProperty(MANGO_EXECUTION_TRACER));
+		}
+		if (preferences.containsKey(MANGO_TIMEOUT)) {
+			timeoutInSeconds = Integer.valueOf(preferences.getProperty(MANGO_TIMEOUT));
+		}
+
+		try {
+			browserSize = driver.manage().window().getSize();
+		} catch (Exception e) {
+			log.warn("browser sizing not supported on this platform.");
+		}
+		if (browserSize == null)
+			return;
+		int browserWidth = browserSize.width;
+		int browserHeight = browserSize.height;
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		int screenWidth = ((Long) js.executeScript("return screen.width")).intValue();
+		int screenHeight = ((Long) js.executeScript("return screen.height")).intValue();
+
+		if (preferences.containsKey(MANGO_BROWSER_HEIGHT)) {
+			int requestedHeigth = Integer.valueOf(preferences.getProperty(MANGO_BROWSER_HEIGHT))
+					.intValue();
+			if (requestedHeigth <= screenHeight) {
+				browserHeight = requestedHeigth;
+			}
+		}
+		if (preferences.containsKey(MANGO_BROWSER_MIN_HEIGHT)) {
+			int requestedHeigth = Integer
+					.valueOf(preferences.getProperty(MANGO_BROWSER_MIN_HEIGHT)).intValue();
+			if (requestedHeigth > browserHeight) {
+				browserHeight = requestedHeigth;
+			}
+		}
+		if (preferences.containsKey(MANGO_BROWSER_WIDTH)) {
+			int requestedWidth = Integer.valueOf(preferences.getProperty(MANGO_BROWSER_WIDTH))
+					.intValue();
+			if (requestedWidth <= screenWidth) {
+				browserWidth = requestedWidth;
+			}
+		}
+		if (preferences.containsKey(MANGO_BROWSER_MIN_WIDTH)) {
+			int requestedWidth = Integer.valueOf(preferences.getProperty(MANGO_BROWSER_MIN_WIDTH))
+					.intValue();
+			if (requestedWidth > browserWidth) {
+				browserWidth = requestedWidth;
+			}
+		}
+		val dim = new Dimension(browserWidth, browserHeight);
+		driver.manage().window().setSize(dim);
 	}
 
 	private void parseOptions(Properties preferences, String options) {
@@ -287,14 +282,12 @@ public class WebUser implements DriveSupport {
 		}
 	}
 
-	private FirefoxProfile useExtensionsAndAcceptUntrustedCertificates(
-			Properties preferences) {
+	private FirefoxProfile useExtensionsAndAcceptUntrustedCertificates(Properties preferences) {
 		FirefoxProfile profile = new FirefoxProfile();
 		if (addExtensions)
 			addExtensions(profile, preferences);
 		for (val pref : preferences.entrySet())
-			profile.setPreference(pref.getKey().toString(), pref.getValue()
-					.toString());
+			profile.setPreference(pref.getKey().toString(), pref.getValue().toString());
 		profile.setAcceptUntrustedCertificates(true);
 		return profile;
 	}
@@ -316,8 +309,7 @@ public class WebUser implements DriveSupport {
 			final String version = parsed[1];
 			try {
 				profile.addExtension(extension);
-				preferences.setProperty("extensions." + name
-						+ ".currentVersion", version);
+				preferences.setProperty("extensions." + name + ".currentVersion", version);
 				log.debug("added extension {} {}", name, version);
 			} catch (IOException e) {
 				log.debug("adding extension {}, unexpected: {}", name, e);
