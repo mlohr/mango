@@ -27,6 +27,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -165,6 +166,18 @@ public class WebUser implements DriveSupport {
 			return elements;
 		}
 		throw new XPathNotFoundException(xpath);
+	}
+
+	@Override
+	public void selectMenuItem(String xpath, String item) {
+		Actions action = new Actions(driver);
+		try {
+			action.moveToElement(forThis(xpath)).perform();
+			action.moveToElement(forThis(item)).click().perform();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void pause() {
