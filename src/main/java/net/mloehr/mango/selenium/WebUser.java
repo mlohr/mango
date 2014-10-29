@@ -74,7 +74,11 @@ public class WebUser implements DriveSupport {
 			driver = aDriver;
 		}
 		driver.manage().deleteAllCookies();
-		driver.manage().window().setPosition(new Point(0, 0));
+		try {
+			driver.manage().window().setPosition(new Point(0, 0));
+		} catch (Exception e) {
+			log.warn("browser positioning not supported on this platform.");
+		}
 		if (!url.equals("")) {
 			driver.get(url);
 		}
