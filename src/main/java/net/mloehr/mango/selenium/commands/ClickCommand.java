@@ -23,6 +23,7 @@ public class ClickCommand implements Command {
 			index = size + index;
 		}
 		val element = elements.get(index);
+		driver.focusOnElement(element); // make sure element is visible
 		click(element, driver, task.getXpath());
 	}
 

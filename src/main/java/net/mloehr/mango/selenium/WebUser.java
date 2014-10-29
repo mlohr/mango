@@ -27,7 +27,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -138,6 +137,14 @@ public class WebUser implements DriveSupport {
 		}
 		val element = driver.findElement(By.xpath(xpath));
 		return ((JavascriptExecutor) driver).executeScript(script, element);
+	}
+
+	/**
+	 * For commands when xpath selects multiple elements, but the command should operate on
+	 * only one element then use this method to make sure the element is visible
+	 */
+	public void focusOnElement(WebElement element) {
+		executeJavaScript(element);
 	}
 
 	@Override
