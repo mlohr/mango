@@ -83,6 +83,7 @@ public class WebUser implements DriveSupport {
 			driver.get(url);
 		}
 		postWebDriverActions(preferences);
+		postWebDriverSizing(preferences);
 		timer = new Timer(timeoutInSeconds);
 	}
 
@@ -236,8 +237,6 @@ public class WebUser implements DriveSupport {
 	}
 
 	private void postWebDriverActions(Properties preferences) {
-		Dimension browserSize = null;
-
 		if (preferences.containsKey(MANGO_EXECUTION_DELAY)) {
 			executionDelay = Integer.valueOf(preferences.getProperty(MANGO_EXECUTION_DELAY))
 					.intValue();
@@ -248,14 +247,18 @@ public class WebUser implements DriveSupport {
 		if (preferences.containsKey(MANGO_TIMEOUT)) {
 			timeoutInSeconds = Integer.valueOf(preferences.getProperty(MANGO_TIMEOUT));
 		}
-
+	}
+	
+	private void postWebDriverSizing(Properties preferences) {
+		Dimension browserSize = null;
 		try {
 			browserSize = driver.manage().window().getSize();
+			driver.manage().window().setSize(browserSize);
+
 		} catch (Exception e) {
 			log.warn("browser sizing not supported on this platform.");
-		}
-		if (browserSize == null)
 			return;
+		}
 		int browserWidth = browserSize.width;
 		int browserHeight = browserSize.height;
 		JavascriptExecutor js = (JavascriptExecutor) driver;
