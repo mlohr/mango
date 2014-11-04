@@ -183,11 +183,12 @@ public class WebUser implements DriveSupport {
 
 	@Override
 	public void selectMenuItem(String xpathMenu, String xpathMenuitem) throws Exception {
-		// switched implemention to javascript instead of the selenium Actions API since
+		// switched implemention to javascript instead of the selenium Actions
+		// API since
 		// this is not supported by SafariDriver
 		String mouseOverScript = "if(document.createEvent){var evObj = document.createEvent('MouseEvents');evObj.initEvent('mouseover', true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent('onmouseover');}; arguments[1].click()";
 		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript(mouseOverScript, forThis(xpathMenu), forThis(xpathMenuitem));		
+		js.executeScript(mouseOverScript, forThis(xpathMenu), forThis(xpathMenuitem));
 		// Actions action = new Actions(driver);
 		// try {
 		// action.moveToElement(forThis(xpath)).perform();
@@ -209,6 +210,17 @@ public class WebUser implements DriveSupport {
 	 */
 	public Actions getActions() {
 		return new Actions(driver);
+	}
+
+	@Override
+	public void switchTo(String text) {
+		if (text.equals(""))
+			driver.close();
+		for (String window : driver.getWindowHandles()) {
+			driver.switchTo().window(window);
+			if (!text.equals("") && driver.getCurrentUrl().contains(text))
+				return;
+		}
 	}
 
 	private void waitForThis(String xpath) {

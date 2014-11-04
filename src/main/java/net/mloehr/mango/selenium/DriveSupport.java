@@ -22,4 +22,6 @@ public interface DriveSupport {
 	
 	public abstract void focusOnElement(WebElement element);
 
+	public abstract void switchTo(String text);
+
 }

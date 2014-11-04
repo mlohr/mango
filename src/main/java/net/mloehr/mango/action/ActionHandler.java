@@ -21,6 +21,7 @@ import net.mloehr.mango.selenium.commands.TextCommand;
 import net.mloehr.mango.selenium.commands.TypeCommand;
 import net.mloehr.mango.selenium.commands.VisibilityCommand;
 import net.mloehr.mango.selenium.commands.MenuCommand;
+import net.mloehr.mango.selenium.commands.WindowCommand;
 
 @Slf4j
 public class ActionHandler implements MethodHandler {
@@ -48,6 +49,7 @@ public class ActionHandler implements MethodHandler {
         availableCommands.put("uncheck", new CheckCommand());
         availableCommands.put("slide", new SlideCommand());
         availableCommands.put("selectMenuItem", new MenuCommand());
+        availableCommands.put("switchTo", new WindowCommand());
     }
 
     @Override

@@ -178,6 +178,16 @@ public class Action {
 		return this;
 	}
 
+	public Action switchTo() {
+		tasks.add(Task.builder().id(getTaskName()).action(name).text("").build());
+		return this;
+	}
+
+	public Action switchTo(String urlSection) {
+		tasks.add(Task.builder().id(getTaskName()).action(name).text(urlSection).build());
+		return this;
+	}
+
 	public static Action withTasks() {
 		return new Action(new Exception().getStackTrace()[1].getMethodName());
 	}
