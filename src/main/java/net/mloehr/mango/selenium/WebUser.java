@@ -145,8 +145,9 @@ public class WebUser implements DriveSupport {
 	}
 
 	/**
-	 * For commands when xpath selects multiple elements, but the command should operate on
-	 * only one element then use this method to make sure the element is visible
+	 * For commands when xpath selects multiple elements, but the command should
+	 * operate on only one element then use this method to make sure the element
+	 * is visible
 	 */
 	public void focusOnElement(WebElement element) {
 		executeJavaScript(element);
@@ -181,15 +182,20 @@ public class WebUser implements DriveSupport {
 	}
 
 	@Override
-	public void selectMenuItem(String xpath, String item) {
-		Actions action = new Actions(driver);
-		try {
-			action.moveToElement(forThis(xpath)).perform();
-			action.moveToElement(forThis(item)).click().perform();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void selectMenuItem(String xpathMenu, String xpathMenuitem) throws Exception {
+		// switched implemention to javascript instead of the selenium Actions API since
+		// this is not supported by SafariDriver
+		String mouseOverScript = "if(document.createEvent){var evObj = document.createEvent('MouseEvents');evObj.initEvent('mouseover', true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent('onmouseover');}; arguments[1].click()";
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript(mouseOverScript, forThis(xpathMenu), forThis(xpathMenuitem));		
+		// Actions action = new Actions(driver);
+		// try {
+		// action.moveToElement(forThis(xpath)).perform();
+		// action.moveToElement(forThis(item)).click().perform();
+		// } catch (Exception e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 	}
 
 	public void pause() {
@@ -248,7 +254,7 @@ public class WebUser implements DriveSupport {
 			timeoutInSeconds = Integer.valueOf(preferences.getProperty(MANGO_TIMEOUT));
 		}
 	}
-	
+
 	private void postWebDriverSizing(Properties preferences) {
 		Dimension browserSize = null;
 		try {

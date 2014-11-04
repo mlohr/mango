@@ -18,7 +18,7 @@ public interface DriveSupport {
 
     public abstract Actions getActions();
 
-	public abstract void selectMenuItem(String xpath, String item);
+	public abstract void selectMenuItem(String xpath, String item) throws Exception;
 	
 	public abstract void focusOnElement(WebElement element);
 
