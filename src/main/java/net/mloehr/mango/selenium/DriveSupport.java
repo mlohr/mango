@@ -24,4 +24,6 @@ public interface DriveSupport {
 
 	public abstract void switchTo(String text);
 
+	public abstract void waitForPageReady();
+
 }

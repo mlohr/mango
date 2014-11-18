@@ -25,6 +25,7 @@ public class ClickCommand implements Command {
 		val element = elements.get(index);
 		driver.focusOnElement(element); // make sure element is visible
 		click(element, driver, task.getXpath());
+		driver.waitForPageReady();
 	}
 
 	private void click(final org.openqa.selenium.WebElement element, DriveSupport driver,

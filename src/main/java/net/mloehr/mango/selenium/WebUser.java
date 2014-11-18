@@ -189,14 +189,23 @@ public class WebUser implements DriveSupport {
 		String mouseOverScript = "if(document.createEvent){var evObj = document.createEvent('MouseEvents');evObj.initEvent('mouseover', true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent('onmouseover');}; arguments[1].click()";
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript(mouseOverScript, forThis(xpathMenu), forThis(xpathMenuitem));
-		// Actions action = new Actions(driver);
-		// try {
-		// action.moveToElement(forThis(xpath)).perform();
-		// action.moveToElement(forThis(item)).click().perform();
-		// } catch (Exception e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
+		waitForPageReady();
+	}
+
+	@Override
+	public void waitForPageReady() {
+		ExpectedCondition<Boolean> expectation = new ExpectedCondition<Boolean>() {
+			public Boolean apply(WebDriver driver) {
+				return ((JavascriptExecutor) driver).executeScript("return document.readyState")
+						.equals("complete");
+			}
+		};
+		Wait<WebDriver> wait = new WebDriverWait(driver, Timer.TIMEOUT_IN_SECONDS);
+		try {
+			wait.until(expectation);
+		} catch (Throwable error) {
+			log.warn("could not wait for readystate: {}", error.toString());
+		}
 	}
 
 	public void pause() {
