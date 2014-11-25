@@ -1,5 +1,6 @@
 package net.mloehr.mango.action;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,6 +149,22 @@ public class Action {
 	}
 
 	/**
+	 * gets the element image into 'image',  identified by 'xpath'
+	 */
+	public Action getImage(String xpath, List<BufferedImage> images) {
+		tasks.add(Task.builder().id(getTaskName()).action(name).xpath(xpath).data(images).build());
+		return this;
+	}
+
+	/**
+	 * loads the element image into 'image',  identified by 'path'
+	 */
+	public Action loadImage(String path, List<BufferedImage> images) {
+		tasks.add(Task.builder().id(getTaskName()).action(name).text(path).data(images).build());
+		return this;
+	}
+
+	/**
 	 * gets the selected option into 'data', of a select-element identified by
 	 * 'xpath'
 	 */
@@ -161,6 +178,12 @@ public class Action {
 	 */
 	public Action getText(String xpath, Object data) {
 		tasks.add(Task.builder().id(getTaskName()).action(name).xpath(xpath).data(data).build());
+		return this;
+	}
+
+	public Action saveImage(String xpath, String path) {
+		tasks.add(Task.builder().id(getTaskName()).action(name).xpath(xpath)
+				.text(path).build());
 		return this;
 	}
 

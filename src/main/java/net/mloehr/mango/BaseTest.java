@@ -1,6 +1,7 @@
 package net.mloehr.mango;
 
 import javassist.util.proxy.ProxyFactory;
+import lombok.Getter;
 import net.mloehr.mango.action.ActionHandler;
 import net.mloehr.mango.selenium.WebUser;
 
@@ -8,6 +9,7 @@ import org.junit.After;
 
 public class BaseTest {
 
+	@Getter
     protected WebUser webUser;
 
     @SuppressWarnings("unchecked")

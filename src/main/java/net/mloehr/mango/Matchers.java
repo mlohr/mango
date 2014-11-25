@@ -1,6 +1,9 @@
 package net.mloehr.mango;
 
+import java.awt.image.BufferedImage;
 import java.util.regex.Pattern;
+
+import lombok.extern.slf4j.Slf4j;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -11,6 +14,7 @@ import org.hamcrest.TypeSafeMatcher;
  *
  * @author t.wood
  */
+@Slf4j
 public class Matchers {
     private static abstract class AbstractRegexpMatcher extends
             TypeSafeMatcher<String> {
@@ -55,6 +59,52 @@ public class Matchers {
             description.appendText("contains match for regex ").appendValue(
                     regex);
         }
+    }
+
+    private static class MatchesImageMatcher extends TypeSafeMatcher<BufferedImage> {
+        protected final BufferedImage reference;
+
+        private MatchesImageMatcher(final BufferedImage reference) {
+        	this.reference = reference;
+        }
+
+        @Override
+        public boolean matchesSafely(final BufferedImage source) {
+        	log.debug("source {}", source);
+            return ImageComparer.compareImages(source, reference) == 0; 
+        }
+
+        @Override
+        public void describeTo(final Description description) {
+            description.appendText("matches image ").appendValue(reference);
+        }
+    }
+
+    public static Matcher<BufferedImage> matchesImage(final BufferedImage reference) {
+        return new MatchesImageMatcher(reference);
+    }
+
+    private static class MatchesImageFileMatcher extends TypeSafeMatcher<String> {
+        protected final String reference;
+
+        private MatchesImageFileMatcher(final String reference) {
+        	this.reference = reference;
+        }
+
+        @Override
+        public boolean matchesSafely(final String source) {
+        	log.debug("source {}", source);
+            return ImageComparer.compareFiles(source, reference) == 0; 
+        }
+
+        @Override
+        public void describeTo(final Description description) {
+            description.appendText("matches image ").appendValue(reference);
+        }
+    }
+
+    public static Matcher<String> matchesImageFile(final String reference) {
+        return new MatchesImageFileMatcher(reference);
     }
 
     /**

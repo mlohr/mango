@@ -1,11 +1,14 @@
 package net.mloehr.mango.selenium;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.imageio.ImageIO;
 
 import lombok.val;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +45,7 @@ public class WebUser implements DriveSupport {
 	private static final String MANGO_EXECUTION_TRACER = "mango.execution-tracer";
 	private static final String MANGO_TIMEOUT = "mango.timeout";
 
-	private static final String tracerScript = "arguments[0].style='border: 3px dashed red';";
+	private static final String tracerScript = "arguments[0].style='box-shadow: inset 0 0 10px red';"; //#0f0 border: 3px inset red
 	private static final String scrollIntoViewScript = "arguments[0].scrollIntoView(false);";
 
 	private WebDriver driver;
@@ -97,6 +100,25 @@ public class WebUser implements DriveSupport {
 	public void takeScreenShot(String name) throws IOException {
 		File shot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		FileUtils.copyFile(shot, new File(name));
+	}
+
+	public void saveElementImage(String xpath, String path) throws Exception {		
+		File screen = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+		BufferedImage elementImage = getElementImage(xpath);
+		ImageIO.write(elementImage, "png", screen);
+		File file = new File(path);
+		FileUtils. copyFile(screen, file);
+	}
+
+	public BufferedImage getElementImage(String xpath) throws Exception {
+		WebElement Image = forThis(xpath); 
+		File screen = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+		int width = Image.getSize().getWidth();
+		int height = Image.getSize().getHeight();
+		BufferedImage img = ImageIO.read(screen);
+		BufferedImage elementImage = img.getSubimage(Image.getLocation().getX(),
+				Image.getLocation().getY(), width, height);
+		return elementImage;
 	}
 
 	public String getCurrentUrl() {

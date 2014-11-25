@@ -13,6 +13,9 @@ import net.mloehr.mango.selenium.commands.ClickCommand;
 import net.mloehr.mango.selenium.commands.Command;
 import net.mloehr.mango.selenium.commands.CountCommand;
 import net.mloehr.mango.selenium.commands.ExecuteCommand;
+import net.mloehr.mango.selenium.commands.GetImageCommand;
+import net.mloehr.mango.selenium.commands.LoadImageCommand;
+import net.mloehr.mango.selenium.commands.SaveImageCommand;
 import net.mloehr.mango.selenium.commands.IsCheckedCommand;
 import net.mloehr.mango.selenium.commands.SelectCommand;
 import net.mloehr.mango.selenium.commands.SelectedCommand;
@@ -39,6 +42,8 @@ public class ActionHandler implements MethodHandler {
         availableCommands.put("execute", new ExecuteCommand());
         availableCommands.put("executeOnElement", new ExecuteCommand());
         availableCommands.put("getAttribute", new AttributeCommand());
+        availableCommands.put("loadImage", new LoadImageCommand());
+        availableCommands.put("getImage", new GetImageCommand());
         availableCommands.put("getSelected", new SelectedCommand());
         availableCommands.put("getText", new TextCommand());
         availableCommands.put("isChecked", new IsCheckedCommand());
@@ -47,6 +52,7 @@ public class ActionHandler implements MethodHandler {
         availableCommands.put("testVisibility", new VisibilityCommand());
         availableCommands.put("type", new TypeCommand());
         availableCommands.put("uncheck", new CheckCommand());
+        availableCommands.put("save", new SaveImageCommand());
         availableCommands.put("slide", new SlideCommand());
         availableCommands.put("selectMenuItem", new MenuCommand());
         availableCommands.put("switchTo", new WindowCommand());

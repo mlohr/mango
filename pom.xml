@@ -5,7 +5,7 @@
 
     <groupId>net.mloehr</groupId>
     <artifactId>mango</artifactId>
-    <version>0.0.17</version>
+    <version>0.0.18</version>
 
     <properties>
         <maven.compiler.source>1.6</maven.compiler.source>
