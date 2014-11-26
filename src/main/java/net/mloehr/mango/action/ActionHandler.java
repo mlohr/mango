@@ -52,7 +52,7 @@ public class ActionHandler implements MethodHandler {
         availableCommands.put("testVisibility", new VisibilityCommand());
         availableCommands.put("type", new TypeCommand());
         availableCommands.put("uncheck", new CheckCommand());
-        availableCommands.put("save", new SaveImageCommand());
+        availableCommands.put("saveImage", new SaveImageCommand());
         availableCommands.put("slide", new SlideCommand());
         availableCommands.put("selectMenuItem", new MenuCommand());
         availableCommands.put("switchTo", new WindowCommand());
