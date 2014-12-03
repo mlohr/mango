@@ -77,7 +77,11 @@ public class WebUser implements DriveSupport {
 			driver = aDriver;
 		}
 		
-		driver.manage().deleteAllCookies();
+		try {
+			driver.manage().deleteAllCookies();
+		} catch (Exception e) {
+			log.warn("deleting all cookies not supported on this platform.");
+		}
 		try {
 			driver.manage().window().setPosition(new Point(0, 0));
 		} catch (Exception e) {
