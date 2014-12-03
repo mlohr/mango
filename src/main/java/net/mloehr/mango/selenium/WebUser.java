@@ -76,6 +76,7 @@ public class WebUser implements DriveSupport {
 		} else {
 			driver = aDriver;
 		}
+		
 		driver.manage().deleteAllCookies();
 		try {
 			driver.manage().window().setPosition(new Point(0, 0));
@@ -90,6 +91,10 @@ public class WebUser implements DriveSupport {
 		timer = new Timer(timeoutInSeconds);
 	}
 
+	public byte[] getScreenShot() throws IOException {
+		return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+	}
+
 	/**
 	 * Takes a screenshot from current browser content
 	 * 
@@ -97,7 +102,7 @@ public class WebUser implements DriveSupport {
 	 *            filename with or without path
 	 * @throws IOException
 	 */
-	public void takeScreenShot(String name) throws IOException {
+	public void saveScreenShot(String name) throws IOException {
 		File shot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		FileUtils.copyFile(shot, new File(name));
 	}
